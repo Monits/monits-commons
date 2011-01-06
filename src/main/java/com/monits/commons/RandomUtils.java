@@ -24,13 +24,13 @@ import java.util.Random;
 public class RandomUtils {
 	
 	/**
-	 * Generates a random String with with the number of characters supplied.
+	 * Generates a random String with the number of characters supplied.
 	 * 
 	 * @param amount The number of characters in the string.
 	 * 
 	 * @return The random String.
 	 */
-	public static String generateCode(int amount){
+	public static String generateRandomString(int amount){
 		
 		Random random = new Random();
 		
