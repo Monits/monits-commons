@@ -24,21 +24,24 @@ import java.util.Random;
 public class RandomUtils {
 	
 	/**
-	 * Generates a random String with 60 chars long.
+	 * Generates a random String with with the number of characters supplied.
 	 * 
-	 * @return    The random String.
+	 * @param amount The number of characters in the string.
+	 * 
+	 * @return The random String.
 	 */
-	public static String generateCode(){
+	public static String generateCode(int amount){
 		
 		Random random = new Random();
 		
-		char[] characters = {'0','1','2','3','4','5','6','7','8','9' ,'a',
-				'b','c','d','e','f','g','h','i','j','k','l','m','n','ñ','o','p','q','r','s','t',
-				'u','v','w','x','y','z'};
+		char[] characters = {'0','1','2','3','4','5','6','7','8','9' ,'a','b',
+				'c','d','e','f','g','h','i','j','k','l','m','n','ñ','o','p',
+				'q','r','s','t','u','v','w','x','y','z'
+				};
 		
 		StringBuffer buffer = new StringBuffer();
 		
-		for (int i = 0; i < 60 ; i++) {
+		for (int i = 0; i < amount ; i++) {
 			buffer.append(characters[random.nextInt(characters.length-1)]);
 		}
 		
