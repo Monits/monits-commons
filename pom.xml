@@ -10,16 +10,16 @@
   <name>commons</name>
   <url>http://maven.apache.org</url>
 
-	<distributionManagement>
-		<repository>
-			<id>nexus</id>
-			<url>http://nexus.monits.com/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus</id>
-			<url>http://nexus.monits.com/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+  <distributionManagement>
+    <repository>
+      <id>nexus</id>
+      <url>http://nexus.monits.com/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>nexus</id>
+      <url>http://nexus.monits.com/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
   
   <build>
 		<finalName>commons</finalName>
@@ -48,6 +48,20 @@
 				<configuration>
 					<encoding>UTF-8</encoding>
 				</configuration>
+			</plugin>
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <version>2.7</version>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>javadoc</goal>
+                    <goal>jar</goal>
+                  </goals>
+                  <phase>site</phase>
+                </execution>
+              </executions>
 			</plugin>
 		</plugins>
 	</build>
