@@ -9,6 +9,17 @@
 
   <name>commons</name>
   <url>http://maven.apache.org</url>
+
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<url>http://nexus.monits.com/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<url>http://nexus.monits.com/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
   
   <build>
 		<finalName>commons</finalName>
