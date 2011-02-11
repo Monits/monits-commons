@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class PaginatedResult<T> {
 
-	private int acutalPage;
+	private int actualPage;
 
 	private int totalPage;
 
@@ -32,13 +32,13 @@ public class PaginatedResult<T> {
 	/**
 	 * Basic constructor with all fields
 	 *
-	 * @param acutalPage The Selected page
+	 * @param actualPage The Selected page
 	 * @param totalPage The total amount of pages
 	 * @param elements The items in the selected page
 	 */
-	public PaginatedResult(int acutalPage, int totalPage, List<T> elements) {
+	public PaginatedResult(int actualPage, int totalPage, List<T> elements) {
 		super();
-		this.acutalPage = acutalPage;
+		this.actualPage = actualPage;
 		this.totalPage = totalPage;
 		this.elements = elements;
 	}
@@ -46,8 +46,8 @@ public class PaginatedResult<T> {
 	/**
 	 * @return the acutalPage
 	 */
-	public int getAcutalPage() {
-		return acutalPage;
+	public int getActualPage() {
+		return actualPage;
 	}
 
 	/**
