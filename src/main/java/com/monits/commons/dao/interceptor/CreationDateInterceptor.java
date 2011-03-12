@@ -18,24 +18,6 @@ public class CreationDateInterceptor extends EmptyInterceptor {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void onDelete(Object entity, Serializable id, Object[] state,
-			String[] propertyNames, Type[] types) {
-	}
-
-	@Override
-	public boolean onFlushDirty(Object entity, Serializable id,
-			Object[] currentState, Object[] previousState,
-			String[] propertyNames, Type[] types) {
-		return false;
-	}
-
-	@Override
-	public boolean onLoad(Object entity, Serializable id, Object[] state,
-			String[] propertyNames, Type[] types) {
-		return false;
-	}
-
-	@Override
 	public boolean onSave(Object entity, Serializable id, Object[] state,
 			String[] propertyNames, Type[] types) {
 
@@ -49,9 +31,4 @@ public class CreationDateInterceptor extends EmptyInterceptor {
 		}
 		return false;
 	}
-
-	@Override
-	public void afterTransactionCompletion(Transaction tx) {
-	}
-
 }
