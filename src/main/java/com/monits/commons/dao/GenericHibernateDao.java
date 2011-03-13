@@ -12,8 +12,7 @@ package com.monits.commons.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.SessionFactory;
 
 import com.google.common.base.Preconditions;
 import com.monits.commons.model.Builder;
@@ -28,9 +27,10 @@ import com.monits.commons.model.Builder;
  * @link 		http://www.monits.com/
  * @since 		1.0.0
  */
-public abstract class GenericHibernateDao<E> extends HibernateDaoSupport
-	implements GenericDao<E>{
+public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 
+	protected SessionFactory sessionFactory;
+	
 	protected Class<? extends E> eClass;
 
 	/**
@@ -40,24 +40,31 @@ public abstract class GenericHibernateDao<E> extends HibernateDaoSupport
 	 */
 	protected abstract Class<? extends E> getDaoClass();
 
-	public GenericHibernateDao() {
+	/**
+	 * Creates a new instance of a GenericHibernateDao
+	 * @param sessionFactory The session factory to be used.
+	 */
+	public GenericHibernateDao(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 		this.eClass = getDaoClass();
-	}
-
-	@Override
-	public E get(Long id) {
-
-		Preconditions.checkNotNull(id);
-
-		// Warning are suppressed as we are getting an E element
-		return getHibernateTemplate().get(eClass, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public E get(Long id) {
+		Preconditions.checkNotNull(id);
+
+		// Warning are suppressed as we are getting an E element
+		return (E) sessionFactory.getCurrentSession().get(eClass, id);
+	}
+
+	@Override
 	public List<? extends E> getAll() {
 		// Warning are suppressed as we are getting an E list
-		return getHibernateTemplate().find("from " + eClass.getName());
+		@SuppressWarnings("unchecked")
+		List<? extends E> results = createCriteria().list();
+
+		return results;
 	}
 
 	/**
@@ -66,7 +73,7 @@ public abstract class GenericHibernateDao<E> extends HibernateDaoSupport
 	 * @return The session.
 	 */
 	protected Criteria createCriteria() {
-		return getSession().createCriteria(eClass);
+		return sessionFactory.getCurrentSession().createCriteria(eClass);
 	}
 
 	@Override
@@ -90,15 +97,14 @@ public abstract class GenericHibernateDao<E> extends HibernateDaoSupport
 	public void delete(E entity) {
 		Preconditions.checkNotNull(entity);
 
-		HibernateTemplate hibernateTemplate = getHibernateTemplate();
-		hibernateTemplate.delete(entity);
+		sessionFactory.getCurrentSession().delete(entity);
 	}
 
 	@Override
 	public E create(Builder<E> builder) {
 		E entity = builder.build();
 
-		getHibernateTemplate().save(entity);
+		sessionFactory.getCurrentSession().save(entity);
 
 		return entity;
 	}
