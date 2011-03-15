@@ -11,6 +11,7 @@ package com.monits.commons.dao;
 
 import java.util.List;
 
+import com.monits.commons.PaginatedResult;
 import com.monits.commons.model.Builder;
 
 /**
@@ -45,15 +46,12 @@ public interface GenericDao<E> {
 	/**
 	 * Same behaviour as {@link #getAll()} but allows pagination.
 	 *
-	 * @param page
-	 *            {@link Long} current page to fetch.
-	 *            (The first page is zero)
-	 * @param amount
-	 *            {@link Long} maximum amount of results
+	 * @param page current page to fetch (The first page is zero).
+	 * @param amount maximum amount of results.
 	 *
 	 * @return paginated results
 	 */
-	List<? extends E> getAll(int page, int amount);
+	PaginatedResult<E> getAll(int page, int amount);
 
 	/**
 	 * Deletes the given entity

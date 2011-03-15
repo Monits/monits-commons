@@ -15,6 +15,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 
 import com.google.common.base.Preconditions;
+import com.monits.commons.PaginatedResult;
 import com.monits.commons.model.Builder;
 
 /**
@@ -76,8 +77,9 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 		return sessionFactory.getCurrentSession().createCriteria(eClass);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<? extends E> getAll(int page, int amount) {
+	public PaginatedResult<E> getAll(int page, int amount) {
 
 		Preconditions.checkArgument(page >= 0, "Invalid page " + page);
 		Preconditions.checkArgument(amount > 0, "Invalid amount " + amount);
@@ -87,10 +89,7 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 		criteria.setFirstResult(page * amount);
 		criteria.setMaxResults(amount);
 
-		@SuppressWarnings("unchecked")
-		List<? extends E> results = criteria.list();
-
-		return results;
+		return new PaginatedResult<E>(page + 1, amount, criteria.list());
 	}
 
 	@Override
