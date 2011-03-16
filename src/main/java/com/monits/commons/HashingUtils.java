@@ -25,12 +25,12 @@ public class HashingUtils {
 	 * @param filename The path to the file to hash.
 	 * @param algorithm Which hashing algorithm to use.
 	 * @return The resulting hash
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
 	public static String getFileHash(String filename, HashingAlgorithm algorithm) throws FileNotFoundException {
 		return getHash(new FileInputStream(filename), algorithm);
 	}
-	
+
 	/**
 	 * Retrieves the given input string hashed with the given hashing algorithm.
 	 * @param input The string to hash.
@@ -40,7 +40,7 @@ public class HashingUtils {
 	public static String getHash(String input, HashingAlgorithm algorithm) {
 		return getHash(new ByteArrayInputStream(input.getBytes()), algorithm);
 	}
-	
+
 	/**
 	 * Retrieves the given input string hashed with the given hashing algorithm.
 	 * @param input The source from which to read the input to hash.
@@ -49,31 +49,31 @@ public class HashingUtils {
 	 */
 	public static String getHash(InputStream input, HashingAlgorithm algorithm) {
 		byte[] buffer = new byte[1024];
-		
+
 		try {
 			MessageDigest algo = MessageDigest.getInstance(algorithm.getName());
-			
+
 			int readBytes;
 			do {
 				readBytes = input.read(buffer);
 				algo.update(buffer);
-			} while (readBytes != buffer.length);
-			
+			} while (readBytes == buffer.length);
+
 			byte messageDigest[] = algo.digest();
 
 			StringBuffer hexString = new StringBuffer();
-			
+
 			for (int i = 0; i < messageDigest.length; i++) {
 				String token = Integer.toHexString(0xFF & messageDigest[i]);
-				
+
 				// Make sure each is exactly 2 chars long
 				if (token.length() < 2) {
 					hexString.append("0");
 				}
-				
+
 				hexString.append(token);
 			}
-			
+
 			return hexString.toString();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
