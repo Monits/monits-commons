@@ -32,7 +32,7 @@ import com.monits.commons.model.Builder;
 public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 
 	protected SessionFactory sessionFactory;
-	
+
 	protected Class<? extends E> eClass;
 
 	/**
@@ -85,17 +85,16 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 		Preconditions.checkArgument(page >= 0, "Invalid page " + page);
 		Preconditions.checkArgument(amount > 0, "Invalid amount " + amount);
 
- 		int totalElements = 
+ 		int totalElements =
  			((Integer) createCriteria().setProjection(Projections.rowCount())
 		            .uniqueResult());
 
-		int totalPages = calculateTotalPages(totalElements, amount);
 		Criteria criteria = createCriteria();
 
 		criteria.setFirstResult(page * amount);
 		criteria.setMaxResults(amount);
 
-		return new PaginatedResult<E>(page + 1, totalPages, criteria.list());
+		return new PaginatedResult<E>(page + 1, criteria.list(), totalElements, amount);
 	}
 
 	@Override
@@ -113,25 +112,4 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 
 		return entity;
 	}
-
-    /**
-     * Calculate the total amount of pages, using a amount of elements and the amount of elements per page
-     *
-     * @param totalElements amount of total elements
-     * @param amountPage amount of element per page
-     * @return the total amount of pages
-     */
-    private int calculateTotalPages(int totalElements, int amountPage) {
-
-    	int totalPages;
-
-    	totalPages = totalElements/amountPage;
-
- 		if(totalElements%amountPage != 0) {
- 			totalPages++;
- 		}
-
- 		return totalPages;
-    }
-    
 }
