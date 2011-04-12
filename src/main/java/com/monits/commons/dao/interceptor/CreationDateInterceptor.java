@@ -3,7 +3,6 @@ package com.monits.commons.dao.interceptor;
 import java.io.Serializable;
 
 import org.hibernate.EmptyInterceptor;
-import org.hibernate.Transaction;
 import org.hibernate.type.Type;
 import org.joda.time.DateTime;
 
