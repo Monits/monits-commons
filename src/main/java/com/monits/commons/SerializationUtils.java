@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * Object serialization utils.
@@ -18,7 +19,7 @@ public class SerializationUtils {
 	 * @param obj The object to serialize
 	 * @return
 	 */
-	public static byte[] serializeObject(Object obj) {
+	public static byte[] serializeObject(Serializable obj) {
 		ObjectOutputStream out;
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
