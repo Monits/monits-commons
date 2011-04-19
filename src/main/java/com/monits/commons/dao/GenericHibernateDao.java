@@ -112,4 +112,10 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 
 		return entity;
 	}
+
+	@Override
+	public void update(E entity) {
+		sessionFactory.getCurrentSession().update(entity);
+	}
+
 }
