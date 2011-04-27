@@ -41,21 +41,25 @@ ConstraintValidator<UploadedFile, Object> {
 		// Minimum size for the file, at least the extension.
 		final long minSize = 3;
 
-			try {
-				if((Boolean)clazz.getMethod(methodIsEmpty).invoke(value)) {
-					return false;
-				}
-			} catch (Exception e) {
-			// Ignored
+		try {
+
+			if((Boolean)clazz.getMethod(methodIsEmpty).invoke(value)) {
+				return false;
 			}
 
-			try {
-				if((Long)clazz.getMethod(methodGetSize).invoke(value) >= minSize) {
-					return false;
-				}
-			} catch (Exception e) {
+		} catch (Exception e) {
 			// Ignored
+		}
+
+		try {
+
+			if((Long)clazz.getMethod(methodGetSize).invoke(value) >= minSize) {
+				return false;
 			}
+
+		} catch (Exception e) {
+			// Ignored
+		}
 
 		return false;
 	}
