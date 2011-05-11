@@ -54,7 +54,7 @@ ConstraintValidator<UploadedFile, Object> {
 		try {
 
 			if(((String)clazz.getMethod(methodGetOriginalName).invoke(value)).length() >= minLength) {
-				return false;
+				return true;
 			}
 
 		} catch (Exception e) {
