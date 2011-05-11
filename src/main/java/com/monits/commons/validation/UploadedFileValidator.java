@@ -33,13 +33,13 @@ ConstraintValidator<UploadedFile, Object> {
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 
 		final String methodIsEmpty = "isEmpty";
-		final String methodGetSize = "getSize";
+		final String methodGetOriginalName = "getOriginalFilename";
 
 		// This class should be "CommonMultipartFile"
 		final Class<? extends Object> clazz = value.getClass();
 
 		// Minimum size for the file, at least the extension.
-		final long minSize = 3;
+		final long minLength = 3;
 
 		try {
 
@@ -53,7 +53,7 @@ ConstraintValidator<UploadedFile, Object> {
 
 		try {
 
-			if((Long)clazz.getMethod(methodGetSize).invoke(value) >= minSize) {
+			if(((String)clazz.getMethod(methodGetOriginalName).invoke(value)).length() >= minLength) {
 				return false;
 			}
 
