@@ -1,4 +1,4 @@
-package configuration;
+package main.java.com.monits.commons.configuration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
