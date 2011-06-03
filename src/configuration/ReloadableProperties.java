@@ -3,13 +3,12 @@ package configuration;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Properties;
 
 public class ReloadableProperties {
 
 	private Properties properties = new Properties();
-	private Long lastLoadTime;
+	private long lastLoadTime;
 	private String filename;
 	private static final int DEFAULT_EXPIRATION_TIME = 300000;
 	private static final String EXPIRATION_TIME_KEY = "expirationTime";
@@ -18,10 +17,9 @@ public class ReloadableProperties {
 	 * @param lastLoadTime 
 	 * @param filename     The filename-
 	 */
-	public ReloadableProperties(long lastLoadTime,
-			String filename) throws FileNotFoundException, IOException {
+	public ReloadableProperties(String filename) throws FileNotFoundException, IOException {
 		super();
-		this.lastLoadTime = lastLoadTime;
+
 		this.filename = filename;
 		
 		loadProperties();
@@ -39,8 +37,7 @@ public class ReloadableProperties {
 	 * @throws IOException
 	 */
 	public String get(String key) throws FileNotFoundException, IOException {
-		Long now = new Date().getTime();
-		if (now - lastLoadTime > getExpirationTime()) {
+		if (System.currentTimeMillis() - lastLoadTime > getExpirationTime()) {
 			loadProperties();
 		}
 		
@@ -55,6 +52,7 @@ public class ReloadableProperties {
 	 */
 	private void loadProperties() throws FileNotFoundException, IOException {
 		properties.load(new FileInputStream(filename));
+		lastLoadTime = System.currentTimeMillis();
 	}
 	
 	/**
