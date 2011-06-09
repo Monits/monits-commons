@@ -61,13 +61,13 @@ public class ReloadableProperties {
 	 * @return the expiration time.
 	 */
 	private int getExpirationTime() {
-		Integer time = Integer.valueOf(properties.getProperty(EXPIRATION_TIME_KEY));
+		String value = properties.getProperty(EXPIRATION_TIME_KEY);
 		
-		if (time == null) {
+		if (value == null) {
 			return DEFAULT_EXPIRATION_TIME;
 		}
 		
-		return time;
+		return Integer.valueOf(value);
 	}
 	
 }
