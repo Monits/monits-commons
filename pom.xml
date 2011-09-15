@@ -20,20 +20,25 @@
     <licenses>
         <license>
             <name>Copyright of Monits S.A.</name>
-            <comments>Usage of this library is strictly forbidden without written notice from Monits S.A.</comments>
         </license>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
     </licenses>
 
     <scm>
-        <developerConnection>scm:svn:http://svn.monits.com/commons/trunk</developerConnection>
-        <url>http://svn.monits.com/commons/trunk</url>
+        <developerConnection>scm:git:git@github.com:Monits/monits-commons.git</developerConnection>
+        <url>http://github.com/Monits/monits-commons</url>
     </scm>
     <issueManagement>
-        <system>Mantis BugTracker</system>
-        <url>http://mantis.monits.com/</url>
+        <system>Github Issue Tracker</system>
+        <url>https://github.com/Monits/monits-commons/issues</url>
     </issueManagement>
     <ciManagement>
-        <system>Hudson</system>
+        <system>Jenkins</system>
         <url>http://hudson.monits.com/hudson</url>
     </ciManagement>
 
