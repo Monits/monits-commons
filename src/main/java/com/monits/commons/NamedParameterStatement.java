@@ -20,6 +20,7 @@
 package com.monits.commons;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
-/**
  * NamedParameterStatement.java
  * 
  * This class wraps around a {@link PreparedStatement} and allows the 
@@ -40,7 +40,8 @@ import java.util.Map;
  * represents what.  This also means that
  * rearranging the SQL statement or adding a parameter doesn't involve 
  * renumbering your indices.
- * Code such as this:
+ * 
+ * The original code was modified to wrap other methods of {@link PreparedStatement}
  *
  * @author adam_crume
  * @link   http://www.javaworld.com/
@@ -63,8 +64,7 @@ public class NamedParameterStatement {
      * @param query      the parameterized query
      * @throws SQLException if the statement could not be created
      */
-    public NamedParameterStatement(Connection connection, String query) throws 
-SQLException {
+    public NamedParameterStatement(Connection connection, String query) throws SQLException {
         indexMap=new HashMap();
         String parsedQuery=parse(query, indexMap);
         statement=connection.prepareStatement(parsedQuery);
@@ -232,11 +232,26 @@ SQLException {
      * @throws IllegalArgumentException if the parameter does not exist
      * @see PreparedStatement#setTimestamp(int, java.sql.Timestamp)
      */
-    public void setTimestamp(String name, Timestamp value) throws SQLException 
-{
+    public void setTimestamp(String name, Timestamp value) throws SQLException {
+    	int[] indexes=getIndexes(name);
+    	for(int i=0; i < indexes.length; i++) {
+    		statement.setTimestamp(indexes[i], value);
+    	}
+    }
+    
+    
+    /**
+     * Sets a parameter.
+     * @param name  parameter name
+     * @param value parameter value
+     * @throws SQLException if an error occurred
+     * @throws IllegalArgumentException if the parameter does not exist
+     * @see PreparedStatement#setTimestamp(int, java.sql.Timestamp)
+     */
+    public void setDate(String name, Date value) throws SQLException {
         int[] indexes=getIndexes(name);
         for(int i=0; i < indexes.length; i++) {
-            statement.setTimestamp(indexes[i], value);
+            statement.setDate(indexes[i], value);
         }
     }
 
