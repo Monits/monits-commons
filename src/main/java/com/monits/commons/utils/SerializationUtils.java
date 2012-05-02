@@ -17,7 +17,7 @@
 */
 
 
-package com.monits.commons;
+package com.monits.commons.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

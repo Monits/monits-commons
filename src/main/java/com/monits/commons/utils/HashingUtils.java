@@ -17,7 +17,7 @@
  */
 
 
-package com.monits.commons;
+package com.monits.commons.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import com.monits.commons.model.HashingAlgorithm;
 
 /**
  * Hashing utilities.

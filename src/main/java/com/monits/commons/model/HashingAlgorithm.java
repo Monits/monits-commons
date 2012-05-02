@@ -17,7 +17,7 @@
 */
 
 
-package com.monits.commons;
+package com.monits.commons.model;
 
 public enum HashingAlgorithm {
 	MD5("md5"),
