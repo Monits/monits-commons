@@ -14,6 +14,7 @@ import java.io.Serializable;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -59,6 +60,7 @@ public class SerializationUtilsTest {
  * @link http://www.monits.com/
  * @since 1.0.0
  */
+@Ignore
 class TestObject implements Serializable {
 
 	private static final long serialVersionUID = -4127478195289707770L;
