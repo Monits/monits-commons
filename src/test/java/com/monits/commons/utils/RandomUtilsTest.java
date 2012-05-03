@@ -24,7 +24,7 @@
  * @link 		http://www.monits.com/
  * @since 		1.0.0
  */
-package com.monits.commons;
+package com.monits.commons.utils;
 
 import junit.framework.Assert;
 
