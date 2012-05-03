@@ -15,8 +15,6 @@
    limitations under the License.
 
 */
-
-
 package com.monits.commons;
 
 import java.sql.Connection;
@@ -30,6 +28,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * NamedParameterStatement.java
@@ -53,8 +52,8 @@ public class NamedParameterStatement {
     /** 
      * Maps parameter names to arrays of ints which are the parameter indices. 
      */
-    private final Map indexMap;
-
+    private static final Map<String, int[]> indexMap = new HashMap<String, int[]>();;
+    private final Map<String, List<Integer>> paramMap;
 
     /**
      * Creates a NamedParameterStatement.  Wraps a call to
@@ -65,8 +64,8 @@ public class NamedParameterStatement {
      * @throws SQLException if the statement could not be created
      */
     public NamedParameterStatement(Connection connection, String query) throws SQLException {
-        indexMap=new HashMap();
-        String parsedQuery=parse(query, indexMap);
+    	paramMap = new HashMap<String, List<Integer>>();
+        String parsedQuery = parse(query, paramMap);
         statement=connection.prepareStatement(parsedQuery);
     }
 
@@ -81,16 +80,16 @@ public class NamedParameterStatement {
      * @param paramMap map to hold parameter-index mappings
      * @return the parsed query
      */
-    static final String parse(String query, Map paramMap) {
+    static final String parse(String query, Map<String, List<Integer>> paramMap) {
         // I was originally using regular expressions, but they didn't work well for ignoring
         // parameter-like strings inside quotes.
-        int length=query.length();
-        StringBuffer parsedQuery=new StringBuffer(length);
-        boolean inSingleQuote=false;
-        boolean inDoubleQuote=false;
-        int index=1;
+        int length = query.length();
+        StringBuffer parsedQuery = new StringBuffer(length);
+        boolean inSingleQuote = false;
+        boolean inDoubleQuote = false;
+        int index = 1;
 
-        for(int i=0;i<length;i++) {
+        for(int i = 0; i < length; i++) {
             char c=query.charAt(i);
             if(inSingleQuote) {
                 if(c=='\'') {
@@ -115,9 +114,9 @@ public class NamedParameterStatement {
                     c='?'; // replace the parameter with a question mark
                     i+=name.length(); // skip past the end if the parameter
 
-                    List indexList=(List)paramMap.get(name);
-                    if(indexList==null) {
-                        indexList=new LinkedList();
+                    List<Integer> indexList = paramMap.get(name);
+                    if(indexList == null) {
+                        indexList = new LinkedList<Integer>();
                         paramMap.put(name, indexList);
                     }
                     indexList.add(new Integer(index));
@@ -129,17 +128,18 @@ public class NamedParameterStatement {
         }
 
         // replace the lists of Integer objects with arrays of ints
-        for(Iterator itr=paramMap.entrySet().iterator(); itr.hasNext();) {
-            Map.Entry entry=(Map.Entry)itr.next();
-            List list=(List)entry.getValue();
-            int[] indexes=new int[list.size()];
-            int i=0;
-            for(Iterator itr2=list.iterator(); itr2.hasNext();) {
-                Integer x=(Integer)itr2.next();
-                indexes[i++]=x.intValue();
-            }
-            entry.setValue(indexes);
-        }
+		for(Iterator<Entry<String, List<Integer>>> itr = paramMap.entrySet().iterator(); itr.hasNext();) {
+			Entry<String, List<Integer>> entry = itr.next();
+			List<Integer> list = entry.getValue();
+
+			int[] indexes = new int[list.size()];
+			int i = 0;
+			for (Integer integer: list) {
+				indexes[i++] = integer.intValue();
+			}
+
+			indexMap.put(entry.getKey(), indexes);
+		}
 
         return parsedQuery.toString();
     }
@@ -152,7 +152,7 @@ public class NamedParameterStatement {
      * @throws IllegalArgumentException if the parameter does not exist
      */
     private int[] getIndexes(String name) {
-        int[] indexes=(int[])indexMap.get(name);
+        int[] indexes = indexMap.get(name);
         if(indexes==null) {
             throw new IllegalArgumentException("Parameter not found: "+name);
         }
