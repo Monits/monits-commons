@@ -26,6 +26,7 @@
  */
 package com.monits.commons.dao;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -38,6 +39,12 @@ import com.monits.commons.model.Builder;
 
 /**
  * Generic Hibernate Dao.
+ * 
+ * Beware, the generics must be bound in the class definition.
+ * <pre> {@code 
+ * private class MyGenericDao<T extends MyModel> extends GenericHibernateDao<T> {}
+ * MyGenericDao<MyChildmodel> dao = new MyGenericDao<MyChildModel>(session); // This will throw an exception!
+ * } </pre>
  *
  * @author 		lbritez <lbritez@monits.com>
  * @copyright 	2010 Monits
@@ -53,19 +60,16 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	protected Class<? extends E> eClass;
 
 	/**
-	 * Returns the class of the object to be manipulated by the DAO
-	 *
-	 * @return dao class
-	 */
-	protected abstract Class<? extends E> getDaoClass();
-
-	/**
 	 * Creates a new instance of a GenericHibernateDao
 	 * @param sessionFactory The session factory to be used.
 	 */
+	@SuppressWarnings("unchecked")
 	public GenericHibernateDao(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-		this.eClass = getDaoClass();
+		
+		// Get the generic class
+		ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+		this.eClass = (Class<? extends E>) type.getActualTypeArguments()[0];
 	}
 
 	@SuppressWarnings("unchecked")
