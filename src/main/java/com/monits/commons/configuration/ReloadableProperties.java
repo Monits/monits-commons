@@ -33,7 +33,6 @@ public class ReloadableProperties {
 	private static final String EXPIRATION_TIME_KEY = "expirationTime";
 	
 	/**
-	 * @param lastLoadTime 
 	 * @param filename     The filename-
 	 */
 	public ReloadableProperties(String filename) throws FileNotFoundException, IOException {
