@@ -32,6 +32,13 @@ import java.io.Serializable;
 public class SerializationUtils {
 
 	/**
+	 * Utility classes should not have a public or default constructor.
+	 */
+	private SerializationUtils() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
 	 * Serializes an object into a byte array.
 	 *
 	 * The object is assumed to implement Serializable

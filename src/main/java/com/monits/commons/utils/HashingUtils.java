@@ -43,6 +43,13 @@ import com.monits.commons.model.HashingAlgorithm;
 public class HashingUtils {
 
 	/**
+	 * Utility classes should not have a public or default constructor.
+	 */
+	private HashingUtils() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
 	 * Retrieves the file hashed by the given hashing algorithm.
 	 * @param filename The path to the file to hash.
 	 * @param algorithm Which hashing algorithm to use.
