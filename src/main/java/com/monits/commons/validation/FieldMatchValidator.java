@@ -69,7 +69,7 @@ public class FieldMatchValidator implements
 			return type.isValid(firstObj, secondObj);
 		} catch (final Exception ignore) {
 			// ignore
+			return false;
 		}
-		return true;
 	}
 }

@@ -67,7 +67,7 @@ ConstraintValidator<UploadedFile, Object> {
 				return false;
 			}
 
-		} catch (Exception e) {
+		} catch (Exception e) { // NOPMD - ignore this exception
 			// Ignored
 		}
 
@@ -77,7 +77,7 @@ ConstraintValidator<UploadedFile, Object> {
 				return true;
 			}
 
-		} catch (Exception e) {
+		} catch (Exception e) { // NOPMD - ignore this exception
 			// Ignored
 		}
 
