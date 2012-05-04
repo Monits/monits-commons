@@ -85,54 +85,40 @@ public class NamedParameterStatement {
 		Map<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
 		int length = query.length();
 		StringBuffer parsedQuery = new StringBuffer(length);
-		boolean inSingleQuote = false;
-		boolean inDoubleQuote = false;
 		int index = 1;
 
 		for (int i = 0; i < length; i++) {
 			char c = query.charAt(i);
-			if (inSingleQuote) {
 
-				if (c == '\'') {
-					inSingleQuote = false;
+			if (c == '\'' || c == '"') {
+				// Consume quoted substrings...
+				char original = c;
+				do {
+					i++;
+					parsedQuery.append(c);
+				} while (i < length && (c = query.charAt(i)) != original);
+			} else if (c == ':' && i + 1 < length
+					&& Character.isJavaIdentifierStart(query.charAt(i + 1))) {
+
+				// Found a placeholder!
+				int j = i + 2;
+				while (j < length && Character.isJavaIdentifierPart(query.charAt(j))) {
+					j++;
 				}
 
-			} else if (inDoubleQuote) {
+				String name = query.substring(i + 1,j);
+				c = '?'; // replace the parameter with a question mark
+				i += name.length(); // skip past the end if the parameter
 
-				if (c == '"') {
-					inDoubleQuote = false;
+				List<Integer> indexList = paramMap.get(name);
+				if (indexList == null) {
+					indexList = new LinkedList<Integer>();
+					paramMap.put(name, indexList);
 				}
 
-			} else {
+				indexList.add(index);
 
-				if (c == '\'') {
-					inSingleQuote = true;
-
-				} else if (c == '"') {
-					inDoubleQuote = true;
-
-				} else if (c == ':' && i + 1 < length
-						&& Character.isJavaIdentifierStart(query.charAt(i + 1))) {
-
-					int j = i + 2;
-					while (j < length && Character.isJavaIdentifierPart(query.charAt(j))) {
-						j++;
-					}
-
-					String name = query.substring(i + 1,j);
-					c = '?'; // replace the parameter with a question mark
-					i += name.length(); // skip past the end if the parameter
-
-					List<Integer> indexList = paramMap.get(name);
-					if (indexList == null) {
-						indexList = new LinkedList<Integer>();
-						paramMap.put(name, indexList);
-					}
-
-					indexList.add(index);
-
-					index++;
-				}
+				index++;
 			}
 
 			parsedQuery.append(c);
