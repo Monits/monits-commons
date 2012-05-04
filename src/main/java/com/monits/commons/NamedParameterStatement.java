@@ -130,7 +130,7 @@ public class NamedParameterStatement {
 						paramMap.put(name, indexList);
 					}
 
-					indexList.add(new Integer(index));
+					indexList.add(index);
 
 					index++;
 				}
