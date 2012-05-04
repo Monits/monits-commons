@@ -14,9 +14,6 @@
    limitations under the License.
 
 */
-
-
-
 package com.monits.commons.configuration;
 
 import java.io.FileInputStream;
@@ -24,6 +21,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * ReloadableProperties.
+ *
+ * @copyright 2011 Monits
+ * @license Apache 2.0 License
+ * @version Release: 1.0.0
+ * @link http://www.monits.com/
+ * @since 1.0.0
+ */
 public class ReloadableProperties {
 
 	private Properties properties = new Properties();
@@ -69,10 +75,23 @@ public class ReloadableProperties {
 	 * @throws IOException
 	 */
 	private void loadProperties() throws FileNotFoundException, IOException {
-		properties.load(new FileInputStream(filename));
-		lastLoadTime = System.currentTimeMillis();
+
+		FileInputStream fileInputStream = null;
+		try {
+			fileInputStream = new FileInputStream(filename);
+
+			properties.load(fileInputStream);
+			lastLoadTime = System.currentTimeMillis();
+
+		} finally {
+			// Making sure Stream, if any, is closed.
+			if (fileInputStream != null) {
+				fileInputStream.close();
+			}
+		}
+
 	}
-	
+
 	/**
 	 * Retrieves the expiration time.
 	 * 
