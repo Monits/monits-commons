@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.google.common.base.Charsets;
 import com.monits.commons.model.HashingAlgorithm;
 
 /**
@@ -59,7 +60,7 @@ public class HashingUtils {
 	 * @return The resulting hash
 	 */
 	public static String getHash(String input, HashingAlgorithm algorithm) {
-		return getHash(new ByteArrayInputStream(input.getBytes()), algorithm);
+		return getHash(new ByteArrayInputStream(input.getBytes(Charsets.UTF_8)), algorithm);
 	}
 
 	/**
