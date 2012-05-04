@@ -24,7 +24,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -80,8 +79,6 @@ public class NamedParameterStatement {
 	 * @return the parsed query
 	 */
 	/*default*/ static final String parse(String query, Map<String, int[]> indexMap) {
-		// I was originally using regular expressions, but they didn't work well for ignoring
-		// parameter-like strings inside quotes.
 		Map<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
 		int length = query.length();
 		StringBuffer parsedQuery = new StringBuffer(length);
@@ -101,12 +98,7 @@ public class NamedParameterStatement {
 					&& Character.isJavaIdentifierStart(query.charAt(i + 1))) {
 
 				// Found a placeholder!
-				int j = i + 2;
-				while (j < length && Character.isJavaIdentifierPart(query.charAt(j))) {
-					j++;
-				}
-
-				String name = query.substring(i + 1,j);
+				String name = parseParameterName(query, i);
 				c = '?'; // replace the parameter with a question mark
 				i += name.length(); // skip past the end if the parameter
 
@@ -124,9 +116,35 @@ public class NamedParameterStatement {
 			parsedQuery.append(c);
 		}
 
+		toIntArrayMap(paramMap, indexMap);
+
+		return parsedQuery.toString();
+	}
+
+	/**
+	 * Parses a name from the given query string starting at the given position.
+	 * @param query The query string from which to parse the parameter name
+	 * @param pos The position at which it was detected a parameter starts
+	 * @return The name of the parameter parsed
+	 */
+	private static String parseParameterName(String query, int pos) {
+		int j = pos + 2;
+		while (j < query.length() && Character.isJavaIdentifierPart(query.charAt(j))) {
+			j++;
+		}
+
+		return query.substring(pos + 1, j);
+	}
+
+	/**
+	 * Moves all values from a map having a list of ints, to one having an array of ints
+	 * @param inMap The input map, having a list of ints for values.
+	 * @param outMap The output map, on which to put the same values as an array of ints.
+	 */
+	private static void toIntArrayMap(Map<String, List<Integer>> inMap,
+			Map<String, int[]> outMap) {
 		// replace the lists of Integer objects with arrays of ints
-		for (Iterator<Entry<String, List<Integer>>> itr = paramMap.entrySet().iterator(); itr.hasNext();) {
-			Entry<String, List<Integer>> entry = itr.next();
+		for (Entry<String, List<Integer>> entry : inMap.entrySet()) {
 			List<Integer> list = entry.getValue();
 
 			int[] indexes = new int[list.size()];
@@ -135,11 +153,10 @@ public class NamedParameterStatement {
 				indexes[i++] = integer.intValue();
 			}
 
-			indexMap.put(entry.getKey(), indexes);
+			outMap.put(entry.getKey(), indexes);
 		}
-
-		return parsedQuery.toString();
 	}
+
 
 	/**
 	 * Returns the indexes for a parameter.
