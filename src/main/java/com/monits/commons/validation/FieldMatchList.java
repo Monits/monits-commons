@@ -43,7 +43,6 @@ import java.lang.annotation.Target;
 @Target({TYPE, ANNOTATION_TYPE})
 @Retention(RUNTIME)
 @Documented
-public @interface FieldMatchList
-{
-    FieldMatch[] value();
+public @interface FieldMatchList {
+	FieldMatch[] value();
 }

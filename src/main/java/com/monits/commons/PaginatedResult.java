@@ -57,7 +57,7 @@ public class PaginatedResult<T> {
 	 * @param totalElements the total amount of elements
 	 * @param amountPerPage the amount the elements per page
 	 */
-	public PaginatedResult(int actualPage, List<T> elements, int totalElements, int amountPerPage ) {
+	public PaginatedResult(int actualPage, List<T> elements, int totalElements, int amountPerPage) {
 		super();
 
 		this.actualPage = actualPage;
@@ -93,16 +93,16 @@ public class PaginatedResult<T> {
      * @param amountPage amount of element per page
      * @return the total amount of pages
      */
-    private int calculateTotalPages(int totalElements, int amountPage) {
+	private int calculateTotalPages(int totalElements, int amountPage) {
 
-    	int totalPages;
+		int totalPages;
 
-    	totalPages = totalElements/amountPage;
+		totalPages = totalElements / amountPage;
 
- 		if(totalElements%amountPage != 0) {
- 			totalPages++;
- 		}
- 		return totalPages;
-    }
+		if (totalElements % amountPage != 0) {
+			totalPages++;
+		}
+		return totalPages;
+	}
 
 }

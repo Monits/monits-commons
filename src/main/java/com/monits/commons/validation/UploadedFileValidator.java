@@ -29,6 +29,8 @@
  */
 package com.monits.commons.validation;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -42,8 +44,7 @@ import javax.validation.ConstraintValidatorContext;
  * @link http://www.monits.com/
  * @since 1.0.0
  */
-public class UploadedFileValidator implements
-ConstraintValidator<UploadedFile, Object> {
+public class UploadedFileValidator implements ConstraintValidator<UploadedFile, Object> {
 
 	@Override
 	public void initialize(UploadedFile constraintAnnotation) {
@@ -63,22 +64,30 @@ ConstraintValidator<UploadedFile, Object> {
 
 		try {
 
-			if((Boolean)clazz.getMethod(methodIsEmpty).invoke(value)) {
+			if ((Boolean)clazz.getMethod(methodIsEmpty).invoke(value)) {
 				return false;
 			}
 
-		} catch (Exception e) { // NOPMD - ignore this exception
-			// Ignored
+		} catch (IllegalAccessException e) { // NOPMD - ignore this exception
+			// ignore
+		} catch (InvocationTargetException e) { // NOPMD - ignore this exception
+			// ignore
+		} catch (NoSuchMethodException e) { // NOPMD - ignore this exception
+			// ignore
 		}
 
 		try {
 
-			if(((String)clazz.getMethod(methodGetOriginalName).invoke(value)).length() >= minLength) {
+			if (((String)clazz.getMethod(methodGetOriginalName).invoke(value)).length() >= minLength) {
 				return true;
 			}
 
-		} catch (Exception e) { // NOPMD - ignore this exception
-			// Ignored
+		} catch (IllegalAccessException e) { // NOPMD - ignore this exception
+			// ignore
+		} catch (InvocationTargetException e) { // NOPMD - ignore this exception
+			// ignore
+		} catch (NoSuchMethodException e) { // NOPMD - ignore this exception
+			// ignore
 		}
 
 		return false;

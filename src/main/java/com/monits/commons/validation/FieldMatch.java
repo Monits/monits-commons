@@ -54,24 +54,24 @@ import javax.validation.Payload;
 @Retention(RUNTIME)
 @Constraint(validatedBy = FieldMatchValidator.class)
 @Documented
-public @interface FieldMatch
-{
-    String message() default "{constraints.fieldmatch}";
+public @interface FieldMatch {
 
-    Class<?>[] groups() default {};
+	String message() default "{constraints.fieldmatch}";
 
-    Class<? extends Payload>[] payload() default {};
+	Class<?>[] groups() default {};
 
-    /**
-     * @return The first field
-     */
-    String first();
+	Class<? extends Payload>[] payload() default {};
 
-    /**
-     * @return The second field
-     */
-    String second();
+	/**
+	 * @return The first field
+	 */
+	String first();
 
-    FieldMatchType type() default FieldMatchType.EQUAL;
+	/**
+	 * @return The second field
+	 */
+	String second();
+
+	FieldMatchType type() default FieldMatchType.EQUAL;
 
 }

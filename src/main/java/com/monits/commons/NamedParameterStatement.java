@@ -22,7 +22,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -100,32 +99,32 @@ public class NamedParameterStatement {
 
 			} else if (inDoubleQuote) {
 
-				if(c == '"') {
+				if (c == '"') {
 					inDoubleQuote = false;
 				}
 
 			} else {
 
-				if(c == '\'') {
+				if (c == '\'') {
 					inSingleQuote = true;
 
 				} else if (c == '"') {
 					inDoubleQuote = true;
 
-				} else if (c == ':' && i+1 < length &&
-						Character.isJavaIdentifierStart(query.charAt(i+1))) {
+				} else if (c == ':' && i + 1 < length
+						&& Character.isJavaIdentifierStart(query.charAt(i + 1))) {
 
-					int j = i+2;
+					int j = i + 2;
 					while (j < length && Character.isJavaIdentifierPart(query.charAt(j))) {
 						j++;
 					}
 
-					String name = query.substring(i+1,j);
-					c='?'; // replace the parameter with a question mark
+					String name = query.substring(i + 1,j);
+					c = '?'; // replace the parameter with a question mark
 					i += name.length(); // skip past the end if the parameter
 
 					List<Integer> indexList = paramMap.get(name);
-					if(indexList == null) {
+					if (indexList == null) {
 						indexList = new LinkedList<Integer>();
 						paramMap.put(name, indexList);
 					}
@@ -140,7 +139,7 @@ public class NamedParameterStatement {
 		}
 
 		// replace the lists of Integer objects with arrays of ints
-		for(Iterator<Entry<String, List<Integer>>> itr = paramMap.entrySet().iterator(); itr.hasNext();) {
+		for (Iterator<Entry<String, List<Integer>>> itr = paramMap.entrySet().iterator(); itr.hasNext();) {
 			Entry<String, List<Integer>> entry = itr.next();
 			List<Integer> list = entry.getValue();
 
@@ -164,9 +163,10 @@ public class NamedParameterStatement {
 	 */
 	private int[] getIndexes(String name) {
 		int[] indexes = indexMap.get(name);
-		if(indexes == null) {
-			throw new IllegalArgumentException("Parameter not found: "+name);
+		if (indexes == null) {
+			throw new IllegalArgumentException("Parameter not found: " + name);
 		}
+
 		return indexes;
 	}
 
@@ -180,7 +180,7 @@ public class NamedParameterStatement {
 	 */
 	public void setObject(String name, Object value) throws SQLException {
 		int[] indexes = getIndexes(name);
-		for(int i = 0; i < indexes.length; i++) {
+		for (int i = 0; i < indexes.length; i++) {
 			statement.setObject(indexes[i], value);
 		}
 	}
@@ -195,7 +195,7 @@ public class NamedParameterStatement {
 	 */
 	public void setString(String name, String value) throws SQLException {
 		int[] indexes = getIndexes(name);
-		for(int i = 0; i < indexes.length; i++) {
+		for (int i = 0; i < indexes.length; i++) {
 			statement.setString(indexes[i], value);
 		}
 	}
@@ -210,7 +210,7 @@ public class NamedParameterStatement {
 	 */
 	public void setInt(String name, int value) throws SQLException {
 		int[] indexes = getIndexes(name);
-		for(int i = 0; i < indexes.length; i++) {
+		for (int i = 0; i < indexes.length; i++) {
 			statement.setInt(indexes[i], value);
 		}
 	}
@@ -225,7 +225,7 @@ public class NamedParameterStatement {
 	 */
 	public void setLong(String name, long value) throws SQLException {
 		int[] indexes = getIndexes(name);
-		for(int i = 0; i < indexes.length; i++) {
+		for (int i = 0; i < indexes.length; i++) {
 			statement.setLong(indexes[i], value);
 		}
 	}
@@ -240,7 +240,7 @@ public class NamedParameterStatement {
 	 */
 	public void setTimestamp(String name, Timestamp value) throws SQLException {
 		int[] indexes = getIndexes(name);
-		for(int i = 0; i < indexes.length; i++) {
+		for (int i = 0; i < indexes.length; i++) {
 			statement.setTimestamp(indexes[i], value);
 		}
 	}
@@ -255,7 +255,7 @@ public class NamedParameterStatement {
 	 */
 	public void setDate(String name, Date value) throws SQLException {
 		int[] indexes = getIndexes(name);
-		for(int i = 0; i < indexes.length; i++) {
+		for (int i = 0; i < indexes.length; i++) {
 			statement.setDate(indexes[i], value);
 		}
 	}
