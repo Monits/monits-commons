@@ -43,7 +43,7 @@ import com.monits.commons.model.Builder;
  * Beware, the generics must be bound in the class definition.
  * <pre> {@code 
  * private class MyGenericDao<T extends MyModel> extends GenericHibernateDao<T> {}
- * MyGenericDao<MyChildmodel> dao = new MyGenericDao<MyChildModel>(session); // This will throw an exception!
+ * MyGenericDao<MyChildModel> dao = new MyGenericDao<MyChildModel>(session); // This will throw an exception!
  * } </pre>
  *
  * @author 		lbritez <lbritez@monits.com>
