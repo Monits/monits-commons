@@ -81,4 +81,8 @@ public class SerializationUtils {
 		return ret;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <T extends Serializable> T clone(T object) {
+		return (T) SerializationUtils.deserializeObject(SerializationUtils.serializeObject(object));
+	}
 }
