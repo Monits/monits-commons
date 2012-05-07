@@ -30,12 +30,17 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
+import org.hibernate.impl.CriteriaImpl;
 
 import com.google.common.base.Preconditions;
 import com.monits.commons.PaginatedResult;
 import com.monits.commons.model.Builder;
+import com.monits.commons.utils.SerializationUtils;
 
 /**
  * Generic Hibernate Dao.
@@ -93,27 +98,37 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	/**
 	 * Creates a session of criteria.
 	 *
-	 * @return The session.
+	 * @return The criteria.
 	 */
 	protected Criteria createCriteria() {
 		return sessionFactory.getCurrentSession().createCriteria(eClass);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public PaginatedResult<E> getAll(int page, int amount) {
 
+		try {
+			return getPaginated(createCriteria(), page, amount);
+		} catch (HibernateException e) {
+			throw new RuntimeException(e);
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected PaginatedResult<E> getPaginated(Criteria criteria, int page, int amount)
+			throws HibernateException, CloneNotSupportedException {
 		Preconditions.checkArgument(page >= 0, "Invalid page " + page);
 		Preconditions.checkArgument(amount > 0, "Invalid amount " + amount);
 
- 		int totalElements =
- 			((Integer) createCriteria().setProjection(Projections.rowCount())
-		            .uniqueResult());
+		Session session = sessionFactory.getCurrentSession();
+		
+		CloneableCriteria cc = new CloneableCriteria((CriteriaImpl) criteria);
+		int totalElements = (Integer) cc.clone().setProjection(Projections.rowCount())
+			.getExecutableCriteria(session).uniqueResult();
 
-		Criteria criteria = createCriteria();
-
-		criteria.setFirstResult(page * amount);
-		criteria.setMaxResults(amount);
+		criteria.setFirstResult(page * amount).setMaxResults(amount);
 
 		return new PaginatedResult<E>(page + 1, criteria.list(), totalElements, amount);
 	}
@@ -139,4 +154,21 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 		sessionFactory.getCurrentSession().update(entity);
 	}
 
+	/**
+	 * Criteria that allows to be cloneable.
+	 * @author jsotuyod
+	 */
+	private class CloneableCriteria extends DetachedCriteria implements Cloneable {
+		
+		private static final long serialVersionUID = 6483528856617926063L;
+
+		public CloneableCriteria(CriteriaImpl criteria) {
+			super(criteria, criteria);
+		}
+		
+		@Override
+		protected CloneableCriteria clone() throws CloneNotSupportedException {
+			return SerializationUtils.clone(this);
+		}
+	}
 }
