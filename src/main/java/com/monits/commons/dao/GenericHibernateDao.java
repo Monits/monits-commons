@@ -118,7 +118,8 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	
 	@SuppressWarnings("unchecked")
 	protected PaginatedResult<E> getPaginated(Criteria criteria, int page, int amount)
-			throws HibernateException, CloneNotSupportedException {
+		throws HibernateException, CloneNotSupportedException {
+		
 		Preconditions.checkArgument(page >= 0, "Invalid page " + page);
 		Preconditions.checkArgument(amount > 0, "Invalid amount " + amount);
 
@@ -166,9 +167,11 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 			super(criteria, criteria);
 		}
 		
+		// CHECKSTYLE:OFF
 		@Override
 		protected CloneableCriteria clone() throws CloneNotSupportedException {
 			return SerializationUtils.clone(this);
 		}
+		// CHECKSTYLE:ON
 	}
 }
