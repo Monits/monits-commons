@@ -158,7 +158,7 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	 * Criteria that allows to be cloneable.
 	 * @author jsotuyod
 	 */
-	private class CloneableCriteria extends DetachedCriteria implements Cloneable {
+	private static class CloneableCriteria extends DetachedCriteria implements Cloneable {
 		
 		private static final long serialVersionUID = 6483528856617926063L;
 
