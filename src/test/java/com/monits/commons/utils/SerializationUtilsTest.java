@@ -47,6 +47,7 @@ public class SerializationUtilsTest {
 		Assert.assertTrue(list.equals(deserializedList));
 	}
 
+	@Test
 	public void testClone() {
 		ArrayList<String> clone = SerializationUtils.clone(list);
 		
