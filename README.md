@@ -3,6 +3,26 @@
 Basically, Monits-Commons is a Java library with common functionalities that we use at Monits. 
 Hashing, Random Utils, Dao, Serialization, Validation, etc.
 
+# Maven users!
+
+The project is hosted in our Open Source Maven repository!
+
+	<repositories>
+		<repository>
+			<id>monits-snapshots</id>
+			<url>http://nexus.monits.com/content/repositories/oss-snapshots/</url>
+			<name>Monits Snapshots</name>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.monits</groupId>
+			<artifactId>commons</artifactId>
+			<version>1.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
 # Installation
 
 Just 
