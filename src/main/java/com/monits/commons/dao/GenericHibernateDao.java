@@ -142,8 +142,8 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	}
 
 	@Override
-	public E create(Builder<E> builder) {
-		E entity = builder.build();
+	public <T extends E> T create(Builder<T> builder) {
+		T entity = builder.build();
 
 		sessionFactory.getCurrentSession().save(entity);
 

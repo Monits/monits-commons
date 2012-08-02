@@ -86,7 +86,7 @@ public interface GenericDao<E> {
 	 *
 	 * @return The entity created.
 	 */
-	E create(Builder<E> builder);
+	<T extends E> T create(Builder<T> builder);
 
 	/**
 	 * Updates an existant entity.
