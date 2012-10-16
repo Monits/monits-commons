@@ -10,6 +10,8 @@
 package com.monits.commons.utils;
 
 
+import java.io.FileNotFoundException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,6 +34,16 @@ public class HashingUtilsTest {
 	private static final String TEXT = "q1w2e3r4";
 	private static final String TEXT_TO_MD5 = "c62d929e7b7e7b6165923a5dfc60cb56";
 	private static final String TEXT_TO_SHA256 = "13a5c202e320d0bf9bb2c6e2c7cf380a6f7de5d392509fee260b809c893ff2f9";
+
+	private static final String TEST_1024_BYTE_FILE = "src/test/resources/1024bytesFile";
+	private static final String TEST_1025_BYTE_FILE = "src/test/resources/1025bytesFile";
+	private static final String TEST_2_BYTE_FILE = "src/test/resources/2bytesFile";
+	private static final String TEST_0_BYTE_FILE = "src/test/resources/0bytesFile";
+
+	private static final String TEST_1024_BYTE_FILE_HASH = "cd3b0a56bc304075e28a20a4edd57068";
+	private static final String TEST_1025_BYTE_FILE_HASH = "44d0dc734ef2d3bcaa32ff4c8e7b2419";
+	private static final String TEST_2_BYTE_FILE_HASH = "60b725f10c9c85c70d97880dfe8191b3";
+	private static final String TEST_0_BYTE_FILE_HASH = "d41d8cd98f00b204e9800998ecf8427e";
 
 	/**
 	 * @throws java.lang.Exception
@@ -59,5 +71,28 @@ public class HashingUtilsTest {
 		String actualSHA256 = HashingUtils.getHash(TEXT, HashingAlgorithm.SHA256);
 		Assert.assertNotNull(actualSHA256);
 		Assert.assertEquals(TEXT_TO_SHA256, actualSHA256);
+	}
+
+	/**
+	 * Some tests regarding different file sizes
+	 * Note that 1024 is the current size of the buffer used in getHash function.
+	 */
+	@Test
+	public void testGetHash() throws FileNotFoundException {
+		String hashTest = HashingUtils.getFileHash(TEST_0_BYTE_FILE,  HashingAlgorithm.MD5);
+		Assert.assertNotNull(hashTest);
+		Assert.assertEquals(TEST_0_BYTE_FILE_HASH, hashTest);
+
+		hashTest = HashingUtils.getFileHash(TEST_2_BYTE_FILE, HashingAlgorithm.MD5);
+		Assert.assertNotNull(hashTest);
+		Assert.assertEquals(TEST_2_BYTE_FILE_HASH, hashTest);
+
+		hashTest = HashingUtils.getFileHash(TEST_1024_BYTE_FILE, HashingAlgorithm.MD5);
+		Assert.assertNotNull(hashTest);
+		Assert.assertEquals(TEST_1024_BYTE_FILE_HASH, hashTest);
+
+		hashTest = HashingUtils.getFileHash(TEST_1025_BYTE_FILE, HashingAlgorithm.MD5);
+		Assert.assertNotNull(hashTest);
+		Assert.assertEquals(TEST_1025_BYTE_FILE_HASH, hashTest);
 	}
 }
