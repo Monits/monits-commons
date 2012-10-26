@@ -43,6 +43,21 @@ import java.util.Random;
  */
 public class RandomUtils {
 
+	private static final char[] LATIN_ALPHABET = { 'a', 'b', 'c', 'd', 'e', 'f',
+			'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r',
+			's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+	private static final char[] ALPHANUMERIC = { '0', '1', '2', '3', '4', '5',
+			'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+			'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u',
+			'v', 'w', 'x', 'y', 'z'};
+
+	private static final char[] HEXADECIMAL = { '0', '1', '2', '3', '4', '5',
+			'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+	private static final char[] NUMERIC = { '0', '1', '2', '3', '4', '5',
+		'6', '7', '8', '9'};
+
 	/**
 	 * Utility classes should not have a public or default constructor.
 	 */
@@ -51,28 +66,85 @@ public class RandomUtils {
 	}
 
 	/**
-	 * Generates a random String with the number of characters requested.
+	 * Generates a random String with the number and type of characters requested.
 	 *
 	 * @param amount The number of characters in the string. If negative, it will be treated as zero.
+	 * @param typeChar The type of characters.
 	 *
 	 * @return The random String.
 	 */
-	public static String generateRandomString(int amount) {
+	public static String generateRandomString(int amount, char[] typeChar) {
 
 		Random random = new Random();
-
-		char[] characters = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-			'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-			'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
-			'x', 'y', 'z', };
 
 		StringBuffer buffer = new StringBuffer();
 
 		for (int i = 0; i < amount ; i++) {
-			buffer.append(characters[random.nextInt(characters.length - 1)]);
+			buffer.append(typeChar[random.nextInt(typeChar.length - 1)]);
 		}
 
 		return buffer.toString();
+	}
+
+	/**
+	 * Generates a random String with the number of characters requested in alphanumeric.
+	 * (this is just to keep the compatibility with older versions).
+	 *
+	 * @param amount The number of characters in the string. If negative, it will be treated as zero.
+	 *
+	 * @return A random string of length amount with lower case alphanumeric characters.
+	 */
+	@Deprecated
+	public static String generateRandomString(int amount) {
+		return generateRandomAlphanumericString(amount);
+	}
+
+	/**
+	 * Generates a random String with the number of characters requested in Latin alphabet. 
+	 *
+	 * @param amount The number of characters in the string. If negative, it will be treated as zero.
+	 *
+	 * @return A random string of length amount with lower case alphabetic characters. 
+	 */
+	public static String generateRandomLatinAlphabetString(int amount) {
+
+		return generateRandomString(amount, LATIN_ALPHABET);
+	}
+
+	/**
+	 * Generates a random String with the number of characters requested in alphanumeric.
+	 *
+	 * @param amount The number of characters in the string. If negative, it will be treated as zero.
+	 *
+	 * @return A random string of length amount with lower case alphanumeric characters.
+	 */
+	public static String generateRandomAlphanumericString(int amount) {
+
+		return generateRandomString(amount, ALPHANUMERIC);
+	}
+
+	/**
+	 * Generates a random String with the number of characters requested only with numbers.
+	 *
+	 * @param amount The number of characters in the string. If negative, it will be treated as zero.
+	 *
+	 * @return A random string of length amount with numeric characters. 
+	 */
+	public static String generateRandomNumericString(int amount) {
+
+		return generateRandomString(amount, NUMERIC);
+	}
+
+	/**
+	 * Generates a random String with the number of characters requested in hexadecimal.
+	 *
+	 * @param amount The number of characters in the string. If negative, it will be treated as zero.
+	 *
+	 * @return A random string of length amount with lower case hexadecimal characters. .
+	 */
+	public static String generateRandomHexadecimalString(int amount) {
+
+		return generateRandomString(amount, HEXADECIMAL);
 	}
 
 }

@@ -50,6 +50,8 @@ public class RandomUtilsTest {
 
 	private String actual;
 
+	private static final char[] CHARACTERS = { 'a', 'b', 'c', 'd', '3', '4', '5', };
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -72,20 +74,128 @@ public class RandomUtilsTest {
 
 		// Attempt a negative number
 		this.amount = -1;
-		this.actual = RandomUtils.generateRandomString(amount);
+		this.actual = RandomUtils.generateRandomString(amount, CHARACTERS);
 
 		String expected = "";
 		Assert.assertEquals("String build with -1, Failure", expected, actual);
 
 		// Check zero
 		this.amount = 0;
-		this.actual = RandomUtils.generateRandomString(amount);
+		this.actual = RandomUtils.generateRandomString(amount, CHARACTERS);
 
 		Assert.assertEquals("String build with 0, Failure", "", actual);
 
 		// Positive numbers should work
 		amount = 10;
-		this.actual = RandomUtils.generateRandomString(amount);
+		this.actual = RandomUtils.generateRandomString(amount, CHARACTERS);
+
+		Assert.assertNotNull("Null generated, string expected", actual);
+		Assert.assertEquals("Lenght does not match", amount, actual.length());
+	}
+
+	/**
+	 * Test for the method RandomUtils.generateRandomLatinAlphabetString(int amount)
+	 */
+	@Test
+	public void testGenerateRandomLatinAlphabetString() {
+
+		// Attempt a negative number
+		this.amount = -1;
+		this.actual = RandomUtils.generateRandomLatinAlphabetString(amount);
+
+		String expected = "";
+		Assert.assertEquals("String build with -1, Failure", expected, actual);
+
+		// Check zero
+		this.amount = 0;
+		this.actual = RandomUtils.generateRandomLatinAlphabetString(amount);
+
+		Assert.assertEquals("String build with 0, Failure", "", actual);
+
+		// Positive numbers should work
+		amount = 10;
+		this.actual = RandomUtils.generateRandomLatinAlphabetString(amount);
+
+		Assert.assertNotNull("Null generated, string expected", actual);
+		Assert.assertEquals("Lenght does not match", amount, actual.length());
+	}
+
+	/**
+	 * Test for the method RandomUtils.generateRandomAlphanumericString(int amount)
+	 */
+	@Test
+	public void testGenerateRandomAlphanumericString() {
+
+		// Attempt a negative number
+		this.amount = -1;
+		this.actual = RandomUtils.generateRandomAlphanumericString(amount);
+
+		String expected = "";
+		Assert.assertEquals("String build with -1, Failure", expected, actual);
+
+		// Check zero
+		this.amount = 0;
+		this.actual = RandomUtils.generateRandomAlphanumericString(amount);
+
+		Assert.assertEquals("String build with 0, Failure", "", actual);
+
+		// Positive numbers should work
+		amount = 10;
+		this.actual = RandomUtils.generateRandomAlphanumericString(amount);
+
+		Assert.assertNotNull("Null generated, string expected", actual);
+		Assert.assertEquals("Lenght does not match", amount, actual.length());
+	}
+
+	/**
+	 * Test for the method RandomUtils.generateRandomNumericString(int amount)
+	 */
+	@Test
+	public void testGenerateRandomNumericString() {
+
+		// Attempt a negative number
+		this.amount = -1;
+		this.actual = RandomUtils.generateRandomAlphanumericString(amount);
+
+		String expected = "";
+		Assert.assertEquals("String build with -1, Failure", expected, actual);
+
+		// Check zero
+		this.amount = 0;
+		this.actual = RandomUtils.generateRandomNumericString(amount);
+
+		Assert.assertEquals("String build with 0, Failure", "", actual);
+
+		// Positive numbers should work
+		amount = 10;
+		this.actual = RandomUtils.generateRandomNumericString(amount);
+
+		Assert.assertNotNull("Null generated, string expected", actual);
+		Assert.assertEquals("Lenght does not match", amount, actual.length());
+	}
+
+	/**
+	 * Test for the method RandomUtils.generateRandomHexadecimalString(int amount)
+	 */
+	@Test
+	public void testGenerateRandomHexadecimalString() {
+
+		// Attempt a negative number
+		this.amount = -1;
+		this.actual = RandomUtils.generateRandomHexadecimalString(amount);
+
+		String expected = "";
+		Assert.assertEquals("String build with -1, Failure", expected, actual);
+
+		// Check zero
+		this.amount = 0;
+		this.actual = RandomUtils.generateRandomHexadecimalString(amount);
+
+		Assert.assertEquals("String build with 0, Failure", "", actual);
+
+		// Positive numbers should work
+		amount = 10;
+		this.actual = RandomUtils.generateRandomHexadecimalString(amount);
 
 		Assert.assertNotNull("Null generated, string expected", actual);
 		Assert.assertEquals("Lenght does not match", amount, actual.length());
