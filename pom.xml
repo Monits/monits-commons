@@ -36,7 +36,7 @@
     </issueManagement>
 
     <build>
-        <finalName>commons</finalName>
+        <finalName>monits-commons</finalName>
     </build>
 
     <reporting>
