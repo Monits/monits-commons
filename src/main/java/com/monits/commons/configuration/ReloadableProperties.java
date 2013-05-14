@@ -32,16 +32,17 @@ import java.util.Properties;
  */
 public class ReloadableProperties {
 
-	private Properties properties = new Properties();
-	private long lastLoadTime;
-	private String filename;
 	private static final int DEFAULT_EXPIRATION_TIME = 300000;
 	private static final String EXPIRATION_TIME_KEY = "expirationTime";
 	
+	private final Properties properties = new Properties();
+	private long lastLoadTime;
+	private final String filename;
+	
 	/**
-	 * @param filename     The filename-
+	 * @param filename The filename.
 	 */
-	public ReloadableProperties(String filename) throws FileNotFoundException, IOException {
+	public ReloadableProperties(final String filename) throws FileNotFoundException, IOException {
 		super();
 
 		this.filename = filename;
@@ -60,7 +61,7 @@ public class ReloadableProperties {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public String get(String key) throws FileNotFoundException, IOException {
+	public String get(final String key) throws FileNotFoundException, IOException {
 		if (System.currentTimeMillis() - lastLoadTime > getExpirationTime()) {
 			loadProperties();
 		}
@@ -98,7 +99,7 @@ public class ReloadableProperties {
 	 * @return the expiration time.
 	 */
 	private int getExpirationTime() {
-		String value = properties.getProperty(EXPIRATION_TIME_KEY);
+		final String value = properties.getProperty(EXPIRATION_TIME_KEY);
 		
 		if (value == null) {
 			return DEFAULT_EXPIRATION_TIME;

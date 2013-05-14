@@ -34,8 +34,8 @@ public class CreationDateInterceptor extends EmptyInterceptor {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public boolean onSave(Object entity, Serializable id, Object[] state,
-			String[] propertyNames, Type[] types) {
+	public boolean onSave(final Object entity, final Serializable id,
+			final Object[] state, final String[] propertyNames, final Type[] types) {
 
 		if (entity instanceof CreationDateable) {
 			for (int i = 0; i < propertyNames.length; i++) {
@@ -45,6 +45,7 @@ public class CreationDateInterceptor extends EmptyInterceptor {
 				}
 			}
 		}
+		
 		return false;
 	}
 }

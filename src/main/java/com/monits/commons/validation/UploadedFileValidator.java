@@ -51,7 +51,7 @@ public class UploadedFileValidator implements ConstraintValidator<UploadedFile, 
 	}
 
 	@Override
-	public boolean isValid(Object value, ConstraintValidatorContext context) {
+	public boolean isValid(final Object value, final ConstraintValidatorContext context) {
 
 		final String methodIsEmpty = "isEmpty";
 		final String methodGetOriginalName = "getOriginalFilename";

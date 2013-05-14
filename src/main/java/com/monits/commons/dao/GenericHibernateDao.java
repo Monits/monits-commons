@@ -60,26 +60,26 @@ import com.monits.commons.utils.SerializationUtils;
  */
 public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 
-	protected SessionFactory sessionFactory;
+	protected final SessionFactory sessionFactory;
 
-	protected Class<? extends E> eClass;
+	protected final Class<? extends E> eClass;
 
 	/**
 	 * Creates a new instance of a GenericHibernateDao
 	 * @param sessionFactory The session factory to be used.
 	 */
 	@SuppressWarnings("unchecked")
-	public GenericHibernateDao(SessionFactory sessionFactory) {
+	public GenericHibernateDao(final SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 		
 		// Get the generic class
-		ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+		final ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
 		this.eClass = (Class<? extends E>) type.getActualTypeArguments()[0];
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public E get(Long id) {
+	public E get(final Long id) {
 		Preconditions.checkNotNull(id);
 
 		// Warning are suppressed as we are getting an E element
@@ -90,7 +90,7 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	public List<? extends E> getAll() {
 		// Warning are suppressed as we are getting an E list
 		@SuppressWarnings("unchecked")
-		List<? extends E> results = createCriteria().list();
+		final List<? extends E> results = createCriteria().list();
 
 		return results;
 	}
@@ -105,28 +105,28 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	}
 
 	@Override
-	public PaginatedResult<E> getAll(int page, int amount) {
+	public PaginatedResult<E> getAll(final int page, final int amount) {
 
 		try {
 			return getPaginated(createCriteria(), page, amount);
-		} catch (HibernateException e) {
+		} catch (final HibernateException e) {
 			throw new RuntimeException(e);
-		} catch (CloneNotSupportedException e) {
+		} catch (final CloneNotSupportedException e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected PaginatedResult<E> getPaginated(Criteria criteria, int page, int amount)
+	protected PaginatedResult<E> getPaginated(final Criteria criteria, final int page, final int amount)
 		throws HibernateException, CloneNotSupportedException {
 		
 		Preconditions.checkArgument(page >= 0, "Invalid page " + page);
 		Preconditions.checkArgument(amount > 0, "Invalid amount " + amount);
 
-		Session session = sessionFactory.getCurrentSession();
+		final Session session = sessionFactory.getCurrentSession();
 		
-		CloneableCriteria cc = new CloneableCriteria((CriteriaImpl) criteria);
-		int totalElements = (Integer) cc.clone().setProjection(Projections.rowCount())
+		final CloneableCriteria cc = new CloneableCriteria((CriteriaImpl) criteria);
+		final int totalElements = (Integer) cc.clone().setProjection(Projections.rowCount())
 			.getExecutableCriteria(session).uniqueResult();
 
 		criteria.setFirstResult(page * amount).setMaxResults(amount);
@@ -135,15 +135,15 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	}
 
 	@Override
-	public void delete(E entity) {
+	public void delete(final E entity) {
 		Preconditions.checkNotNull(entity);
 
 		sessionFactory.getCurrentSession().delete(entity);
 	}
 
 	@Override
-	public <T extends E> T create(Builder<T> builder) {
-		T entity = builder.build();
+	public <T extends E> T create(final Builder<T> builder) {
+		final T entity = builder.build();
 
 		sessionFactory.getCurrentSession().save(entity);
 
@@ -151,7 +151,7 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	}
 
 	@Override
-	public void update(E entity) {
+	public void update(final E entity) {
 		sessionFactory.getCurrentSession().update(entity);
 	}
 
@@ -163,7 +163,7 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 		
 		private static final long serialVersionUID = 6483528856617926063L;
 
-		public CloneableCriteria(CriteriaImpl criteria) {
+		public CloneableCriteria(final CriteriaImpl criteria) {
 			super(criteria, criteria);
 		}
 		

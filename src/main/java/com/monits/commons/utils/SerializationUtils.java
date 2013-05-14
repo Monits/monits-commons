@@ -45,15 +45,15 @@ public class SerializationUtils {
 	 * @param obj The object to serialize
 	 * @return
 	 */
-	public static byte[] serializeObject(Serializable obj) {
-		ObjectOutputStream out;
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	public static byte[] serializeObject(final Serializable obj) {
+		final ObjectOutputStream out;
+		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
 		try {
 			out = new ObjectOutputStream(outputStream);
 
 			out.writeObject(obj);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 
@@ -61,28 +61,33 @@ public class SerializationUtils {
 	}
 
 	/**
-	 * Deserialiazes an object from a byte array.
-	 * @param str
-	 * @return
+	 * Deserializes an object from a byte array.
+	 * @param str The stream from which to read the object.
+	 * @return The deserialized object.
 	 */
-	public static Object deserializeObject(byte[] str) {
-		ObjectInputStream in;
-		ByteArrayInputStream inputStream = new ByteArrayInputStream(str);
-		Object ret;
+	@SuppressWarnings("unchecked")
+	public static <T extends Serializable> T deserializeObject(final byte[] str) {
+		final ObjectInputStream in;
+		final ByteArrayInputStream inputStream = new ByteArrayInputStream(str);
+		final T ret;
 
 		try {
 			in = new ObjectInputStream(inputStream);
 
-			ret = in.readObject();
-		} catch (Exception e) {
+			ret = (T) in.readObject();
+		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 
 		return ret;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <T extends Serializable> T clone(T object) {
-		return (T) SerializationUtils.deserializeObject(SerializationUtils.serializeObject(object));
+	/**
+	 * Clones the given serializable object by serializing and deserializing it into a copy.
+	 * @param object The object being cloned.
+	 * @return A copy of the object.
+	 */
+	public static <T extends Serializable> T clone(final T object) {
+		return SerializationUtils.deserializeObject(SerializationUtils.serializeObject(object));
 	}
 }

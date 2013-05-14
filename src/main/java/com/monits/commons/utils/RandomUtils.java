@@ -73,11 +73,11 @@ public class RandomUtils {
 	 *
 	 * @return The random String.
 	 */
-	public static String generateRandomString(int amount, char[] typeChar) {
+	public static String generateRandomString(final int amount, final char[] typeChar) {
 
-		Random random = new Random();
+		final Random random = new Random();
 
-		StringBuffer buffer = new StringBuffer();
+		final StringBuffer buffer = new StringBuffer();
 
 		for (int i = 0; i < amount ; i++) {
 			buffer.append(typeChar[random.nextInt(typeChar.length - 1)]);
@@ -95,7 +95,7 @@ public class RandomUtils {
 	 * @return A random string of length amount with lower case alphanumeric characters.
 	 */
 	@Deprecated
-	public static String generateRandomString(int amount) {
+	public static String generateRandomString(final int amount) {
 		return generateRandomAlphanumericString(amount);
 	}
 
@@ -106,7 +106,7 @@ public class RandomUtils {
 	 *
 	 * @return A random string of length amount with lower case alphabetic characters. 
 	 */
-	public static String generateRandomLatinAlphabetString(int amount) {
+	public static String generateRandomLatinAlphabetString(final int amount) {
 
 		return generateRandomString(amount, LATIN_ALPHABET);
 	}
@@ -118,7 +118,7 @@ public class RandomUtils {
 	 *
 	 * @return A random string of length amount with lower case alphanumeric characters.
 	 */
-	public static String generateRandomAlphanumericString(int amount) {
+	public static String generateRandomAlphanumericString(final int amount) {
 
 		return generateRandomString(amount, ALPHANUMERIC);
 	}
@@ -130,7 +130,7 @@ public class RandomUtils {
 	 *
 	 * @return A random string of length amount with numeric characters. 
 	 */
-	public static String generateRandomNumericString(int amount) {
+	public static String generateRandomNumericString(final int amount) {
 
 		return generateRandomString(amount, NUMERIC);
 	}
@@ -142,7 +142,7 @@ public class RandomUtils {
 	 *
 	 * @return A random string of length amount with lower case hexadecimal characters. .
 	 */
-	public static String generateRandomHexadecimalString(int amount) {
+	public static String generateRandomHexadecimalString(final int amount) {
 
 		return generateRandomString(amount, HEXADECIMAL);
 	}

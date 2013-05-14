@@ -56,7 +56,8 @@ public class HashingUtils {
 	 * @return The resulting hash
 	 * @throws FileNotFoundException
 	 */
-	public static String getFileHash(String filename, HashingAlgorithm algorithm) throws FileNotFoundException {
+	public static String getFileHash(final String filename,
+			final HashingAlgorithm algorithm) throws FileNotFoundException {
 		return getHash(new FileInputStream(filename), algorithm);
 	}
 
@@ -66,7 +67,7 @@ public class HashingUtils {
 	 * @param algorithm Which hashing algorithm to use.
 	 * @return The resulting hash
 	 */
-	public static String getHash(String input, HashingAlgorithm algorithm) {
+	public static String getHash(final String input, final HashingAlgorithm algorithm) {
 		return getHash(new ByteArrayInputStream(input.getBytes(Charsets.UTF_8)), algorithm);
 	}
 
@@ -76,23 +77,23 @@ public class HashingUtils {
 	 * @param algorithm Which hashing algorithm to use.
 	 * @return The resulting hash
 	 */
-	public static String getHash(InputStream input, HashingAlgorithm algorithm) {
-		byte[] buffer = new byte[1024];
+	public static String getHash(final InputStream input, final HashingAlgorithm algorithm) {
+		final byte[] buffer = new byte[1024];
 
 		try {
-			MessageDigest algo = MessageDigest.getInstance(algorithm.getName());
+			final MessageDigest algo = MessageDigest.getInstance(algorithm.getName());
 
 			int readBytes;
 			while ( (readBytes = input.read(buffer)) != -1) {
 				algo.update(buffer, 0, readBytes);
 			};
 
-			byte messageDigest[] = algo.digest();
+			final byte messageDigest[] = algo.digest();
 
-			StringBuffer hexString = new StringBuffer();
+			final StringBuffer hexString = new StringBuffer();
 
 			for (int i = 0; i < messageDigest.length; i++) {
-				String token = Integer.toHexString(0xFF & messageDigest[i]);
+				final String token = Integer.toHexString(0xFF & messageDigest[i]);
 
 				// Make sure each is exactly 2 chars long
 				if (token.length() < 2) {
@@ -103,9 +104,9 @@ public class HashingUtils {
 			}
 
 			return hexString.toString();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
-		} catch (NoSuchAlgorithmException e) {
+		} catch (final NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 		}
 	}

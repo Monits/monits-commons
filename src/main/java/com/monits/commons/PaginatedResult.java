@@ -43,11 +43,11 @@ import java.util.List;
  */
 public class PaginatedResult<T> {
 
-	private int actualPage;
+	private final int actualPage;
 
-	private int totalPage;
+	private final int totalPage;
 
-	private List<T> elements;
+	private final List<T> elements;
 
 	 /**
 	 * Basic constructor with all fields.
@@ -57,11 +57,13 @@ public class PaginatedResult<T> {
 	 * @param totalElements the total amount of elements
 	 * @param amountPerPage the amount the elements per page
 	 */
-	public PaginatedResult(int actualPage, List<T> elements, int totalElements, int amountPerPage) {
+	public PaginatedResult(final int actualPage, final List<T> elements,
+			final int totalElements, final int amountPerPage) {
 		super();
 
 		this.actualPage = actualPage;
 		this.totalPage = this.calculateTotalPages(totalElements, amountPerPage);
+		// TODO : In version 1.2 this should be an unmodifiableList
 		this.elements = elements;
 	}
 
@@ -93,7 +95,7 @@ public class PaginatedResult<T> {
      * @param amountPage amount of element per page
      * @return the total amount of pages
      */
-	private int calculateTotalPages(int totalElements, int amountPage) {
+	private int calculateTotalPages(final int totalElements, final int amountPage) {
 
 		int totalPages;
 

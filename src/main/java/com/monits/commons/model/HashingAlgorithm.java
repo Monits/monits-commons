@@ -23,13 +23,13 @@ public enum HashingAlgorithm {
 	MD5("md5"),
 	SHA256("sha-256");
 	
-	private String name;
+	private final String name;
 	
 	/**
 	 * Creates a new hashing algorithm.
 	 * @param name The algorithm name.
 	 */
-	HashingAlgorithm(String name) {
+	HashingAlgorithm(final String name) {
 		this.name = name;
 	}
 	

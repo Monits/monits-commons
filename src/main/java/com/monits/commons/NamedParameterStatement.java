@@ -61,9 +61,10 @@ public class NamedParameterStatement {
 	 * @param query      the parameterized query
 	 * @throws SQLException if the statement could not be created
 	 */
-	public NamedParameterStatement(Connection connection, String query) throws SQLException {
+	public NamedParameterStatement(final Connection connection,
+			final String query) throws SQLException {
 		indexMap = new HashMap<String, int[]>();
-		String parsedQuery = parse(query, indexMap);
+		final String parsedQuery = parse(query, indexMap);
 		statement = connection.prepareStatement(parsedQuery);
 	}
 
@@ -78,10 +79,10 @@ public class NamedParameterStatement {
 	 * @param indexMap map to hold parameter-index mappings
 	 * @return the parsed query
 	 */
-	/*default*/ static final String parse(String query, Map<String, int[]> indexMap) {
-		Map<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
-		int length = query.length();
-		StringBuffer parsedQuery = new StringBuffer(length);
+	/*default*/ static final String parse(final String query, final Map<String, int[]> indexMap) {
+		final Map<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
+		final int length = query.length();
+		final StringBuffer parsedQuery = new StringBuffer(length);
 		int index = 1;
 
 		for (int i = 0; i < length; i++) {
@@ -98,7 +99,7 @@ public class NamedParameterStatement {
 					&& Character.isJavaIdentifierStart(query.charAt(i + 1))) {
 
 				// Found a placeholder!
-				String name = parseParameterName(query, i);
+				final String name = parseParameterName(query, i);
 				c = '?'; // replace the parameter with a question mark
 				i += name.length(); // skip past the end if the parameter
 
@@ -127,7 +128,7 @@ public class NamedParameterStatement {
 	 * @param pos The position at which it was detected a parameter starts
 	 * @return The name of the parameter parsed
 	 */
-	private static String parseParameterName(String query, int pos) {
+	private static String parseParameterName(final String query, final int pos) {
 		int j = pos + 2;
 		while (j < query.length() && Character.isJavaIdentifierPart(query.charAt(j))) {
 			j++;
@@ -141,13 +142,13 @@ public class NamedParameterStatement {
 	 * @param inMap The input map, having a list of ints for values.
 	 * @param outMap The output map, on which to put the same values as an array of ints.
 	 */
-	private static void toIntArrayMap(Map<String, List<Integer>> inMap,
-			Map<String, int[]> outMap) {
+	private static void toIntArrayMap(final Map<String, List<Integer>> inMap,
+			final Map<String, int[]> outMap) {
 		// replace the lists of Integer objects with arrays of ints
 		for (Entry<String, List<Integer>> entry : inMap.entrySet()) {
-			List<Integer> list = entry.getValue();
+			final List<Integer> list = entry.getValue();
 
-			int[] indexes = new int[list.size()];
+			final int[] indexes = new int[list.size()];
 			int i = 0;
 			for (Integer integer: list) {
 				indexes[i++] = integer.intValue();
@@ -164,8 +165,8 @@ public class NamedParameterStatement {
 	 * @return parameter indexes
 	 * @throws IllegalArgumentException if the parameter does not exist
 	 */
-	private int[] getIndexes(String name) {
-		int[] indexes = indexMap.get(name);
+	private int[] getIndexes(final String name) {
+		final int[] indexes = indexMap.get(name);
 		if (indexes == null) {
 			throw new IllegalArgumentException("Parameter not found: " + name);
 		}
@@ -181,8 +182,8 @@ public class NamedParameterStatement {
 	 * @throws IllegalArgumentException if the parameter does not exist
 	 * @see PreparedStatement#setObject(int, java.lang.Object)
 	 */
-	public void setObject(String name, Object value) throws SQLException {
-		int[] indexes = getIndexes(name);
+	public void setObject(final String name, final Object value) throws SQLException {
+		final int[] indexes = getIndexes(name);
 		for (int i = 0; i < indexes.length; i++) {
 			statement.setObject(indexes[i], value);
 		}
@@ -196,8 +197,8 @@ public class NamedParameterStatement {
 	 * @throws IllegalArgumentException if the parameter does not exist
 	 * @see PreparedStatement#setString(int, java.lang.String)
 	 */
-	public void setString(String name, String value) throws SQLException {
-		int[] indexes = getIndexes(name);
+	public void setString(final String name, final String value) throws SQLException {
+		final int[] indexes = getIndexes(name);
 		for (int i = 0; i < indexes.length; i++) {
 			statement.setString(indexes[i], value);
 		}
@@ -211,8 +212,8 @@ public class NamedParameterStatement {
 	 * @throws IllegalArgumentException if the parameter does not exist
 	 * @see PreparedStatement#setInt(int, int)
 	 */
-	public void setInt(String name, int value) throws SQLException {
-		int[] indexes = getIndexes(name);
+	public void setInt(final String name, final int value) throws SQLException {
+		final int[] indexes = getIndexes(name);
 		for (int i = 0; i < indexes.length; i++) {
 			statement.setInt(indexes[i], value);
 		}
@@ -226,8 +227,8 @@ public class NamedParameterStatement {
 	 * @throws IllegalArgumentException if the parameter does not exist
 	 * @see PreparedStatement#setInt(int, int)
 	 */
-	public void setLong(String name, long value) throws SQLException {
-		int[] indexes = getIndexes(name);
+	public void setLong(final String name, final long value) throws SQLException {
+		final int[] indexes = getIndexes(name);
 		for (int i = 0; i < indexes.length; i++) {
 			statement.setLong(indexes[i], value);
 		}
@@ -241,8 +242,8 @@ public class NamedParameterStatement {
 	 * @throws IllegalArgumentException if the parameter does not exist
 	 * @see PreparedStatement#setTimestamp(int, java.sql.Timestamp)
 	 */
-	public void setTimestamp(String name, Timestamp value) throws SQLException {
-		int[] indexes = getIndexes(name);
+	public void setTimestamp(final String name, final Timestamp value) throws SQLException {
+		final int[] indexes = getIndexes(name);
 		for (int i = 0; i < indexes.length; i++) {
 			statement.setTimestamp(indexes[i], value);
 		}
@@ -256,8 +257,8 @@ public class NamedParameterStatement {
 	 * @throws IllegalArgumentException if the parameter does not exist
 	 * @see PreparedStatement#setTimestamp(int, java.sql.Timestamp)
 	 */
-	public void setDate(String name, Date value) throws SQLException {
-		int[] indexes = getIndexes(name);
+	public void setDate(final String name, final Date value) throws SQLException {
+		final int[] indexes = getIndexes(name);
 		for (int i = 0; i < indexes.length; i++) {
 			statement.setDate(indexes[i], value);
 		}
