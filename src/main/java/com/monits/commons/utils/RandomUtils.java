@@ -45,18 +45,18 @@ public class RandomUtils {
 
 	private static final char[] LATIN_ALPHABET = { 'a', 'b', 'c', 'd', 'e', 'f',
 		'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r',
-		's', 't', 'u', 'v', 'w', 'x', 'y', 'z',};
+		's', 't', 'u', 'v', 'w', 'x', 'y', 'z', };
 
 	private static final char[] ALPHANUMERIC = { '0', '1', '2', '3', '4', '5',
 		'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 		'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u',
-		'v', 'w', 'x', 'y', 'z',};
+		'v', 'w', 'x', 'y', 'z', };
 
 	private static final char[] HEXADECIMAL = { '0', '1', '2', '3', '4', '5',
-		'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',};
+		'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', };
 
 	private static final char[] NUMERIC = { '0', '1', '2', '3', '4', '5',
-		'6', '7', '8', '9',};
+		'6', '7', '8', '9', };
 
 	/**
 	 * Utility classes should not have a public or default constructor.
