@@ -44,19 +44,19 @@ import java.util.Random;
 public class RandomUtils {
 
 	private static final char[] LATIN_ALPHABET = { 'a', 'b', 'c', 'd', 'e', 'f',
-			'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r',
-			's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+		'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r',
+		's', 't', 'u', 'v', 'w', 'x', 'y', 'z',};
 
 	private static final char[] ALPHANUMERIC = { '0', '1', '2', '3', '4', '5',
-			'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-			'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u',
-			'v', 'w', 'x', 'y', 'z'};
+		'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+		'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u',
+		'v', 'w', 'x', 'y', 'z',};
 
 	private static final char[] HEXADECIMAL = { '0', '1', '2', '3', '4', '5',
-			'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+		'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',};
 
 	private static final char[] NUMERIC = { '0', '1', '2', '3', '4', '5',
-		'6', '7', '8', '9'};
+		'6', '7', '8', '9',};
 
 	/**
 	 * Utility classes should not have a public or default constructor.
@@ -93,6 +93,7 @@ public class RandomUtils {
 	 * @param amount The number of characters in the string. If negative, it will be treated as zero.
 	 *
 	 * @return A random string of length amount with lower case alphanumeric characters.
+	 * @deprecated Use {@link #generateRandomAlphanumericString(int)} instead.
 	 */
 	@Deprecated
 	public static String generateRandomString(final int amount) {

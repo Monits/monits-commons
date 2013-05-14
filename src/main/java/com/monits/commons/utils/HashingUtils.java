@@ -84,9 +84,9 @@ public class HashingUtils {
 			final MessageDigest algo = MessageDigest.getInstance(algorithm.getName());
 
 			int readBytes;
-			while ( (readBytes = input.read(buffer)) != -1) {
+			while ((readBytes = input.read(buffer)) != -1) {
 				algo.update(buffer, 0, readBytes);
-			};
+			}
 
 			final byte messageDigest[] = algo.digest();
 

@@ -47,7 +47,7 @@ import javax.validation.ConstraintValidatorContext;
 public class UploadedFileValidator implements ConstraintValidator<UploadedFile, Object> {
 
 	@Override
-	public void initialize(UploadedFile constraintAnnotation) {
+	public void initialize(final UploadedFile constraintAnnotation) {
 	}
 
 	@Override
@@ -64,29 +64,29 @@ public class UploadedFileValidator implements ConstraintValidator<UploadedFile, 
 
 		try {
 
-			if ((Boolean)clazz.getMethod(methodIsEmpty).invoke(value)) {
+			if ((Boolean) clazz.getMethod(methodIsEmpty).invoke(value)) {
 				return false;
 			}
 
-		} catch (IllegalAccessException e) { // NOPMD - ignore this exception
+		} catch (final IllegalAccessException e) { // NOPMD - ignore this exception
 			// ignore
-		} catch (InvocationTargetException e) { // NOPMD - ignore this exception
+		} catch (final InvocationTargetException e) { // NOPMD - ignore this exception
 			// ignore
-		} catch (NoSuchMethodException e) { // NOPMD - ignore this exception
+		} catch (final NoSuchMethodException e) { // NOPMD - ignore this exception
 			// ignore
 		}
 
 		try {
 
-			if (((String)clazz.getMethod(methodGetOriginalName).invoke(value)).length() >= minLength) {
+			if (((String) clazz.getMethod(methodGetOriginalName).invoke(value)).length() >= minLength) {
 				return true;
 			}
 
-		} catch (IllegalAccessException e) { // NOPMD - ignore this exception
+		} catch (final IllegalAccessException e) { // NOPMD - ignore this exception
 			// ignore
-		} catch (InvocationTargetException e) { // NOPMD - ignore this exception
+		} catch (final InvocationTargetException e) { // NOPMD - ignore this exception
 			// ignore
-		} catch (NoSuchMethodException e) { // NOPMD - ignore this exception
+		} catch (final NoSuchMethodException e) { // NOPMD - ignore this exception
 			// ignore
 		}
 

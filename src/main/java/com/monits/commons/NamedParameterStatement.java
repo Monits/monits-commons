@@ -90,7 +90,7 @@ public class NamedParameterStatement {
 
 			if (c == '\'' || c == '"') {
 				// Consume quoted substrings...
-				char original = c;
+				final char original = c;
 				do {
 					i++;
 					parsedQuery.append(c);
