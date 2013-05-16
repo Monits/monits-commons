@@ -62,7 +62,7 @@ public class RandomUtils {
 	 * Utility classes should not have a public or default constructor.
 	 */
 	private RandomUtils() {
-		throw new UnsupportedOperationException();
+		throw new AssertionError();
 	}
 
 	/**

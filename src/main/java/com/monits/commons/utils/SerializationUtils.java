@@ -35,7 +35,7 @@ public class SerializationUtils {
 	 * Utility classes should not have a public or default constructor.
 	 */
 	private SerializationUtils() {
-		throw new UnsupportedOperationException();
+		throw new AssertionError();
 	}
 
 	/**
