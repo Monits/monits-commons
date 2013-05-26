@@ -15,7 +15,7 @@
     <parent>
         <groupId>com.monits</groupId>
         <artifactId>java-pom</artifactId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
     </parent>
 
     <repositories>
