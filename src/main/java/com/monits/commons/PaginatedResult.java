@@ -29,6 +29,7 @@
  */
 package com.monits.commons;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,9 +44,9 @@ import java.util.List;
  */
 public class PaginatedResult<T> {
 
-	private final int actualPage;
+	private final long actualPage;
 
-	private final int totalPage;
+	private final long totalPage;
 
 	private final List<T> elements;
 
@@ -58,26 +59,25 @@ public class PaginatedResult<T> {
 	 * @param amountPerPage the amount the elements per page
 	 */
 	public PaginatedResult(final int actualPage, final List<T> elements,
-			final int totalElements, final int amountPerPage) {
+			final long totalElements, final long amountPerPage) {
 		super();
 
 		this.actualPage = actualPage;
-		this.totalPage = this.calculateTotalPages(totalElements, amountPerPage);
-		// TODO : In version 1.2 this should be an unmodifiableList
-		this.elements = elements;
+		this.totalPage = calculateTotalPages(totalElements, amountPerPage);
+		this.elements = Collections.unmodifiableList(elements);
 	}
 
 	/**
 	 * @return the acutalPage
 	 */
-	public int getActualPage() {
+	public long getActualPage() {
 		return actualPage;
 	}
 
 	/**
 	 * @return the totalPage
 	 */
-	public int getTotalPage() {
+	public long getTotalPage() {
 		return totalPage;
 	}
 
@@ -95,9 +95,9 @@ public class PaginatedResult<T> {
      * @param amountPage amount of element per page
      * @return the total amount of pages
      */
-	private int calculateTotalPages(final int totalElements, final int amountPage) {
+	private long calculateTotalPages(final long totalElements, final long amountPage) {
 
-		int totalPages;
+		long totalPages;
 
 		totalPages = totalElements / amountPage;
 

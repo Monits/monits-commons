@@ -27,6 +27,7 @@
 package com.monits.commons.dao;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -126,8 +127,16 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 		final Session session = sessionFactory.getCurrentSession();
 		
 		final CloneableCriteria cc = new CloneableCriteria((CriteriaImpl) criteria);
-		final int totalElements = (Integer) cc.clone().setProjection(Projections.rowCount())
-			.getExecutableCriteria(session).uniqueResult();
+		final CriteriaImpl clone = (CriteriaImpl) cc.clone().getExecutableCriteria(session);
+		
+		final Iterator<?> iterator = clone.iterateOrderings();
+		while (iterator.hasNext()) {
+			iterator.next();
+			iterator.remove();
+		}
+		
+		final long totalElements = (Long) clone.setProjection(Projections.rowCount())
+			.uniqueResult();
 
 		criteria.setFirstResult(page * amount).setMaxResults(amount);
 
