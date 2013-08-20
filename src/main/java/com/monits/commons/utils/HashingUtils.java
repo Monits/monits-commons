@@ -90,7 +90,7 @@ public class HashingUtils {
 
 			final byte messageDigest[] = algo.digest();
 
-			final StringBuffer hexString = new StringBuffer();
+			final StringBuilder hexString = new StringBuilder();
 
 			for (int i = 0; i < messageDigest.length; i++) {
 				final String token = Integer.toHexString(0xFF & messageDigest[i]);

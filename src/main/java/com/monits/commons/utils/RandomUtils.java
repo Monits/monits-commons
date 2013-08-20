@@ -77,7 +77,7 @@ public class RandomUtils {
 
 		final Random random = new Random();
 
-		final StringBuffer buffer = new StringBuffer();
+		final StringBuilder buffer = new StringBuilder();
 
 		for (int i = 0; i < amount ; i++) {
 			buffer.append(typeChar[random.nextInt(typeChar.length - 1)]);

@@ -82,7 +82,7 @@ public class NamedParameterStatement {
 	/*default*/ static final String parse(final String query, final Map<String, int[]> indexMap) {
 		final Map<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
 		final int length = query.length();
-		final StringBuffer parsedQuery = new StringBuffer(length);
+		final StringBuilder parsedQuery = new StringBuilder(length);
 		int index = 1;
 
 		for (int i = 0; i < length; i++) {
