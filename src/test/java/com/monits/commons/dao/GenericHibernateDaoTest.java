@@ -8,15 +8,17 @@ import org.junit.Test;
 public class GenericHibernateDaoTest {
 
 	@Test
-	public void testGenericHibernateDao() {
-		
+	public void testGenericHibernateDaoInferredTypesExtendsChain() {
 		// Check extension chains
 		IntegerTestDao intDao = new IntegerTestDao(null);
 		assertEquals(Integer.class, intDao.eClass);
-		
+	}
+	
+	@Test
+	public void testGenericHibernateDaoInferredTypesInlineDefiniton() {
 		// Check in-line class definition
 		GenericHibernateDao<Float> floatDao = new GenericHibernateDao<Float>(null) {
-			// nothing, jsut override the abstract...
+			// nothing, just override the abstract...
 		};
 		assertEquals(Float.class, floatDao.eClass);
 	}

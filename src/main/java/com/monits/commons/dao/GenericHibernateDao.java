@@ -135,12 +135,22 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 			iterator.remove();
 		}
 		
-		final long totalElements = (Long) clone.setProjection(Projections.rowCount())
-			.uniqueResult();
+		final long totalElements = getCount(clone);
 
 		criteria.setFirstResult(page * amount).setMaxResults(amount);
 
 		return new PaginatedResult<E>(page + 1, criteria.list(), totalElements, amount);
+	}
+	
+	/**
+	 * Retrieves the count of rows matching the given criteria
+	 * Beware, the given criteria is modified by this method
+	 * 
+	 * @param criteria The criteria for which to get matching row count 
+	 * @return The number of rows matching the given criteria
+	 */
+	protected long getCount(final Criteria criteria) {
+		return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 	@Override
