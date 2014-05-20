@@ -34,6 +34,7 @@ public class HashingUtilsTest {
 	private static final String TEXT = "q1w2e3r4";
 	private static final String TEXT_TO_MD5 = "c62d929e7b7e7b6165923a5dfc60cb56";
 	private static final String TEXT_TO_SHA256 = "13a5c202e320d0bf9bb2c6e2c7cf380a6f7de5d392509fee260b809c893ff2f9";
+	private static final String TEXT_TO_SHA1 = "1fc854110e5532480000542834f453de31936c2f";
 
 	private static final String TEST_1024_BYTE_FILE = "src/test/resources/1024bytesFile";
 	private static final String TEST_1025_BYTE_FILE = "src/test/resources/1025bytesFile";
@@ -61,16 +62,23 @@ public class HashingUtilsTest {
 
 	@Test
 	public void testGetMD5Hash() {
-		String actualMD5 = HashingUtils.getHash(TEXT, HashingAlgorithm.MD5);
+		final String actualMD5 = HashingUtils.getHash(TEXT, HashingAlgorithm.MD5);
 		Assert.assertNotNull(actualMD5);
 		Assert.assertEquals(TEXT_TO_MD5, actualMD5);
 	}
 
 	@Test
 	public void testGetSHA256Hash() {
-		String actualSHA256 = HashingUtils.getHash(TEXT, HashingAlgorithm.SHA256);
+		final String actualSHA256 = HashingUtils.getHash(TEXT, HashingAlgorithm.SHA256);
 		Assert.assertNotNull(actualSHA256);
 		Assert.assertEquals(TEXT_TO_SHA256, actualSHA256);
+	}
+
+	@Test
+	public void testGetSHA1Hash() {
+		final String actualSHA1 = HashingUtils.getHash(TEXT, HashingAlgorithm.SHA1);
+		Assert.assertNotNull(actualSHA1);
+		Assert.assertEquals(TEXT_TO_SHA1, actualSHA1);
 	}
 
 	/**

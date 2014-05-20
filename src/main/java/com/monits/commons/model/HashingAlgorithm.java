@@ -1,6 +1,6 @@
 /*
 
-   Copyright 2011 Monits
+   Copyright 2010-2014 Monits
  
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,13 +15,12 @@
    limitations under the License.
 
 */
-
-
 package com.monits.commons.model;
 
 public enum HashingAlgorithm {
 	MD5("md5"),
-	SHA256("sha-256");
+	SHA256("sha-256"),
+	SHA1("sha-1");
 	
 	private final String name;
 	
