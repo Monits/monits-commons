@@ -136,10 +136,14 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 		}
 		
 		final long totalElements = getCount(clone);
+		int pageNumber = page;
+		if (pageNumber * amount >= totalElements) {
+			pageNumber = (int) Math.ceil(totalElements / (double) amount) - 1;
+		}
 
-		criteria.setFirstResult(page * amount).setMaxResults(amount);
+		criteria.setFirstResult(pageNumber * amount).setMaxResults(amount);
 
-		return new PaginatedResult<E>(page + 1, criteria.list(), totalElements, amount);
+		return new PaginatedResult<E>(pageNumber + 1, criteria.list(), totalElements, amount);
 	}
 	
 	/**
