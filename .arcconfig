@@ -1,0 +1,7 @@
+{
+    "project_id": "CO",
+    "conduit_uri": "http://ph.monits.com/",
+    "load": [
+        "/opt/arc-checkstyle/src"
+    ]
+}
