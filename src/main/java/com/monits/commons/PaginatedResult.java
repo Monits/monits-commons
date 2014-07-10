@@ -50,6 +50,8 @@ public class PaginatedResult<T> {
 
 	private final List<T> elements;
 
+	private final long totalElements;
+
 	 /**
 	 * Basic constructor with all fields.
 	 *
@@ -65,6 +67,7 @@ public class PaginatedResult<T> {
 		this.actualPage = actualPage;
 		this.totalPage = calculateTotalPages(totalElements, amountPerPage);
 		this.elements = Collections.unmodifiableList(elements);
+		this.totalElements = totalElements;
 	}
 
 	/**
@@ -86,6 +89,13 @@ public class PaginatedResult<T> {
 	 */
 	public List<T> getElements() {
 		return elements;
+	}
+
+	/**
+	 * @return the totalElements
+	 */
+	public long getTotalElements() {
+		return totalElements;
 	}
 
 	/**
