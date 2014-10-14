@@ -3,6 +3,6 @@
     "conduit_uri": "http://ph.monits.com/",
     "unit.engine": "MavenUnitTestEngine",
     "load": [
-        "/opt/arc-checkstyle/src"
+        "/opt/arc-lint"
     ]
 }

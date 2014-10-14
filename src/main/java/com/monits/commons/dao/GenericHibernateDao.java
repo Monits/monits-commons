@@ -27,6 +27,7 @@
 package com.monits.commons.dao;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.List;
 
@@ -73,8 +74,16 @@ public abstract class GenericHibernateDao<E> implements GenericDao<E> {
 	public GenericHibernateDao(final SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 		
-		// Get the generic class
-		final ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+		/*
+		 * Move up the class hierarchy until we find the parameterized type.
+		 * We know we have to go up at least 1 level since we defined so in this class' javadoc.
+		 */
+		Type clazz = getClass();
+		do {
+			clazz = ((Class<?>) clazz).getGenericSuperclass();
+		} while (!(clazz instanceof ParameterizedType));
+		
+		final ParameterizedType type = (ParameterizedType) clazz;
 		this.eClass = (Class<? extends E>) type.getActualTypeArguments()[0];
 	}
 
