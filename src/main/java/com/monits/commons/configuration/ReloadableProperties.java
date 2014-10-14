@@ -105,7 +105,7 @@ public class ReloadableProperties {
 			return DEFAULT_EXPIRATION_TIME;
 		}
 		
-		return Integer.valueOf(value);
+		return Integer.parseInt(value);
 	}
 	
 }
