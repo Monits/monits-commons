@@ -2,4 +2,5 @@
 .*
 *~
 !.arc*
+!.gitflowconfig
 !.gitignore
