@@ -1,9 +1,13 @@
 {
     "linters": {
-        "checkstyle": {
-            "type": "checkstyle",
-            "include": "(\\.java$)",
-	    "aggregate": false
+       "maven": {
+                "type": "maven",
+                "lints": [
+                        "checkstyle"
+                ],
+                "include": [
+                    "(\\.java$)"
+                ]
         }
     }
 }
