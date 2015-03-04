@@ -40,43 +40,47 @@
     </build>
 
     <properties>
-        <apache.commons.validator.version>1.3.1</apache.commons.validator.version>
-        <org.hibernate-validator.version>4.0.2.GA</org.hibernate-validator.version>
+        <commons.validator.version>1.4.1</commons.validator.version>
+        <org.hibernate.validator.version>4.0.2.GA</org.hibernate.validator.version>
+        <org.hibernate.version>4.3.0.Final</org.hibernate.version>
+        <junit.version>4.12</junit.version>
+        <joda-time.version>2.7</joda-time.version>
+        <guava.version>18.0</guava.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.1</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- Joda Time Library -->                                                
         <dependency>                                                              
             <groupId>joda-time</groupId>                                          
             <artifactId>joda-time</artifactId>                                    
-            <version>2.1</version>                                    
+            <version>${joda-time.version}</version>                                    
         </dependency>                                                             
         <dependency>                                                              
             <groupId>org.hibernate</groupId>                                      
             <artifactId>hibernate-core</artifactId>                               
-            <version>4.3.0.Final</version>                               
+            <version>${org.hibernate.version}</version>                               
         </dependency>                                                         
         <!-- Google Commons Library -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>r06</version>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
-            <version>${apache.commons.validator.version}</version>
+            <version>${commons.validator.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>${org.hibernate-validator.version}</version>
+            <version>${org.hibernate.validator.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
