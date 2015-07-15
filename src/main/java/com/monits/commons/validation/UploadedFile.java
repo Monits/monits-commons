@@ -39,11 +39,12 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 /**
- * This annotation is to validate CommonMultipartFile and to avoid uploading
- * files that are empty or it's size is lower than 3, at least an extension.
- * (This doesn't guarantee it has one.)
+ * This annotation validates CommonMultipartFile to avoid uploading invalid files.
+ * Checks if the file name match the given one of the extensions provided
+ * If the extensions weren't provided the annotation only check for a minimum length.
  *
- * @author Gaston Muñiz <gmuniz@monits.com>
+ * @author Gaston Muñiz {@literal <gmuniz@monits.com>}
+ * @author José Manuel Rolón {@literal <jmrolon@monits.com>}
  * @copyright 2011 Monits
  * @license Apache 2.0 License
  * @version Release: 1.0.0
@@ -56,10 +57,28 @@ import javax.validation.Payload;
 @Documented
 public @interface UploadedFile {
 
-    String message() default "{constraints.uploadedfile}";
+	/**
+	 * Default message.
+	 */
+	String message() default "{constraints.uploadedfile}";
 
-    Class<?>[] groups() default {};
+	/**
+	 * Defines valid extensions for the selected file.
+	 */
+	String[] types() default {};
 
-    Class<? extends Payload>[] payload() default {};
+	/**
+	 * Defines if the field is required.
+	 */
+	boolean required() default true;
 
+	/**
+	 * Annotation groups.
+	 */
+	Class<?>[] groups() default {};
+
+	/**
+	 * Annotation payload.
+	 */
+	Class<? extends Payload>[] payload() default {};
 }
