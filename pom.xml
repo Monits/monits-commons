@@ -43,7 +43,7 @@
         <commons.validator.version>1.4.1</commons.validator.version>
         <org.hibernate.validator.version>5.3.6.Final</org.hibernate.validator.version>
         <org.hibernate.version>4.3.0.Final</org.hibernate.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <joda-time.version>2.7</joda-time.version>
         <guava.version>18.0</guava.version>
     </properties>
